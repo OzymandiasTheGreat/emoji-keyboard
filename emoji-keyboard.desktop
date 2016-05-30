@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Emoji keyboard
+GenericName=Emoji Picker
+Comment=Virtual keyboard-like emoji picker
+Exec=emoji-keyboard
+Terminal=false
+Type=Application
+Icon=face-smile
+Categories=Utility
+X-GNOME-Autostart-enabled=true
