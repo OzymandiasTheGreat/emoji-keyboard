@@ -20,12 +20,12 @@ classifiers = [
 
 data_files = [
 	('share/applications', [
-		'emoji-keyboard.desktop'])
+		'emoji-keyboard.desktop']),
 	('/etc/xdg/autostart', [
 		'emoji-keyboard.desktop'])]
 
 setup(
-	name='Emoji Keyboard',
+	name='emoji-keyboard',
 	version='1.0.0',
 	description='Virtual keyboard-like emoji picker',
 	long_description=long_description,
@@ -36,10 +36,10 @@ setup(
 	classifiers=classifiers,
 	package_dir={'emoji_keyboard': 'lib'},
 	packages=['emoji_keyboard'],
-	package_data={'emoji_keyboard': ['lib/data/*']},
+	package_data={'emoji_keyboard': [
+		'data/*.json', 'data/png/*.png', 'data/category_icons/*.png']},
 	data_files=data_files,
 	scripts=['emoji-keyboard'],
 	# Causes unsatisfiable dependencies in the deb
 	# install_requires=['python3-xlib'],
 )
-
