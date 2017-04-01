@@ -20,9 +20,16 @@ classifiers = [
 
 data_files = [
 	('share/applications', [
-		'emoji-keyboard.desktop']),
-	('/etc/xdg/autostart', [
 		'emoji-keyboard.desktop'])]
+
+if os.geteuid() == 0:
+	data_files.append(('/etc/xdg/autostart', [
+		'emoji-keyboard.desktop']))
+#~ else:
+	#~ data_files.append((os.path.expanduser('~/.config/autostart'), [
+		#~ 'emoji-keyboard.desktop']))
+# The above bit should set app to autostart on user installs but absolute path
+# is treated like relative with --user option
 
 setup(
 	name='emoji-keyboard',

@@ -2,3 +2,4 @@ __pycache__
 *.tar.gz
 dist/*
 deb_dist/*
+install_log
