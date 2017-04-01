@@ -11,7 +11,7 @@ This project uses artwork and data from the excellent [EmojiOne project](http://
 You'll need Python 3 GObject bindings and python3-xlib package.
 If you're on a debian based distro you can install them with
 
-`sudo apt install python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0 python3-xlib`
+`sudo apt install python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0 gir1.2-appindicator3-0.1 python3-xlib`
 
 ### App
 
