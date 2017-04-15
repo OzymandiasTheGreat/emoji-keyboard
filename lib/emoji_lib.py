@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import shutil
 import sys
 import json
 import collections
@@ -8,6 +9,7 @@ import time
 from gi.repository import Gtk, GLib, Gdk, GdkPixbuf
 from Xlib import X, XK, display
 from Xlib.protocol import event
+import emoji_shared as shared
 
 data_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
 recent_file = os.path.expanduser('~/.local/share/recent-emoji.json')
@@ -17,7 +19,7 @@ with open(os.path.join(data_dir, 'emoji.json')) as emoji_json:
 		emoji_json.read(), object_pairs_hook=collections.OrderedDict)
 
 categories = (
-	'recent', 'people', 'activity', 'food', 'nature', 'objects', 'travel',
+	'recent', 'people', 'activity', 'foods', 'nature', 'objects', 'travel',
 	'flags', 'symbols')
 
 try:
@@ -199,3 +201,90 @@ class Picker(Gtk.Window):
 			paste(chr(int(split[0], 16)) + chr(int(split[1], 16)))
 		else:
 			paste(chr(int(codepoint, 16)))
+
+
+class Clipboard(object):
+
+	def __init__(self):
+
+		self.local_display = display.Display()
+		self.root_window = self.local_display.screen().root
+		self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+		self.paste_key = (
+			self.local_display.keysym_to_keycode(XK.XK_v), X.ControlMask)
+
+	def paste(self, string):
+
+		clipboard_contents = self.clipboard.wait_for_text()
+		clipboard_contents = (clipboard_contents if clipboard_contents else '')
+		self.clipboard.set_text(string, -1)
+		self.clipboard.store()
+
+		window = self.local_display.get_input_focus().focus
+		window.grab_keyboard(
+			False, X.GrabModeAsync, X.GrabModeAsync, X.CurrentTime)
+		self.local_display.flush()
+		key_press = event.KeyPress(detail=self.paste_key[0],
+									time=X.CurrentTime,
+									root=self.root_window,
+									window=window,
+									child=X.NONE,
+									root_x=0,
+									root_y=0,
+									event_x=0,
+									event_y=0,
+									state=self.paste_key[1],
+									same_screen=1)
+		key_release = event.KeyRelease(detail=self.paste_key[0],
+										time=X.CurrentTime,
+										root=self.root_window,
+										window=window,
+										child=X.NONE,
+										root_x=0,
+										root_y=0,
+										event_x=0,
+										event_y=0,
+										state=self.paste_key[1],
+										same_screen=1)
+		window.send_event(key_press)
+		window.send_event(key_release)
+		self.local_display.ungrab_keyboard(X.CurrentTime)
+		self.local_display.flush()
+
+		time.sleep(0.1)
+		self.clipboard.set_text(clipboard_contents, -1)
+		self.clipboard.store()
+
+
+class Manager(object):
+
+	def __init__(self):
+
+		self.launcher = os.path.join(data_dir, 'emoji-keyboard.desktop')
+		self.starter = os.path.expanduser(
+			'~/.config/autostart/emoji-keyboard.desktop')
+
+	def save_settings(self):
+
+		with open(shared.settings_file, 'w') as fd:
+			fd.write(json.dumps(shared.settings, indent='\t'))
+
+	def save_recent(self):
+
+		with open(shared.recent_file, 'w') as fd:
+			fd.write(json.dumps(list(shared.recent), indent='\t'))
+
+	def check_autostart(self):
+
+		return os.path.isfile(self.starter)
+
+	def set_autostart(self, on):
+
+		if on:
+			if not self.check_autostart():
+				shutil.copy2(self.launcher, self.starter)
+		else:
+			try:
+				os.remove(self.starter)
+			except FileNotFoundError:
+				pass
