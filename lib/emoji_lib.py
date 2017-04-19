@@ -1,206 +1,170 @@
 #!/usr/bin/env python3
 
 import os
+import argparse
 import shutil
 import sys
-import json
-import collections
 import time
-from gi.repository import Gtk, GLib, Gdk, GdkPixbuf
+import json
+from threading import Thread
+from multiprocessing.connection import Client, Listener
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, Gdk, GLib
 from Xlib import X, XK, display
 from Xlib.protocol import event
-import emoji_shared as shared
-
-data_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
-recent_file = os.path.expanduser('~/.local/share/recent-emoji.json')
-
-with open(os.path.join(data_dir, 'emoji.json')) as emoji_json:
-	emojis = json.loads(
-		emoji_json.read(), object_pairs_hook=collections.OrderedDict)
-
-categories = (
-	'recent', 'people', 'activity', 'foods', 'nature', 'objects', 'travel',
-	'flags', 'symbols')
-
 try:
-	with open(recent_file) as rf:
-		recent = collections.deque(json.loads(rf.read()), maxlen=48)
-except FileNotFoundError:
-	recent = collections.deque(maxlen=48)
-
-clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-clipboard_backup = ''
-
-local_display = display.Display()
-root_window = local_display.screen().root
-paste_key = (
-	local_display.keysym_to_keycode(XK.XK_v), Gdk.ModifierType.CONTROL_MASK)
-
-def save_recent():
-
-	with open(recent_file, 'w') as rf:
-		rf.write(json.dumps(list(recent)))
-
-def backup_clipboard():
-
-	backup = clipboard.wait_for_text()
-	if backup is None:
-		backup = ''
-	return backup
-
-def restore_clipboard():
-
-	clipboard.set_text(clipboard_backup, -1)
-	clipboard.store()
-	return False
-
-def paste(char):
-
-	global clipboard_backup
-	clipboard_backup = backup_clipboard()
-	clipboard.set_text(char, -1)
-
-	window = local_display.get_input_focus().focus
-
-	window.grab_keyboard(True, X.GrabModeAsync, X.GrabModeAsync, X.CurrentTime)
-	local_display.flush()
-
-	key_press = event.KeyPress(detail=paste_key[0],
-									time=X.CurrentTime,
-									root=root_window,
-									window=window,
-									child=X.NONE,
-									root_x=0,
-									root_y=0,
-									event_x=0,
-									event_y=0,
-									state=paste_key[1],
-									same_screen=1)
-	key_release = event.KeyRelease(detail=paste_key[0],
-									time=X.CurrentTime,
-									root=root_window,
-									window=window,
-									child=X.NONE,
-									root_x=0,
-									root_y=0,
-									event_x=0,
-									event_y=0,
-									state=paste_key[1],
-									same_screen=1)
-	window.send_event(key_press)
-	window.send_event(key_release)
-
-	local_display.ungrab_keyboard(X.CurrentTime)
-	local_display.flush()
-
-	GLib.timeout_add(200, restore_clipboard)
+	from emoji_keyboard import emoji_shared as shared
+except ImportError:
+	from . import emoji_shared as shared
 
 
-class Picker(Gtk.Window):
+class Lock(object):
 
 	def __init__(self):
 
-		Gtk.Window.__init__(
-			self, title="Emoji", accept_focus=False, skip_taskbar_hint=True)
-		self.set_keep_above(True)
-		self.position = None
-		self.visible = False
-		geometry = Gdk.Geometry()
-		geometry.min_height = 200
-		geometry.min_width = 500
-		self.set_geometry_hints(None, geometry, Gdk.WindowHints.MIN_SIZE)
-		self.set_resizable(False)
-		#~ self.set_default_size(500, 200)
-		self.connect('show', self.show_window)
-		self.connect('delete-event', self.hide_window)
+		lock_name = 'emoji-keyboard.' + os.getenv('USER', 'user') + '.lock'
+		self.lock_path = os.path.join(os.getenv('TMPDIR', '/tmp'), lock_name)
+		self.locked = self.is_locked()
 
-		notebook = Gtk.Notebook()
-		self.add(notebook)
+	def lock(self):
 
-		scrolled_window = Gtk.ScrolledWindow()
-		scrolled_window.set_policy(
-			Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+		try:
+			with open(self.lock_path, 'x') as fd:
+				fd.write(str(os.getpid()))
+			self.locked = self.is_locked()
+			return True
+		except FileExistsError:
+			print('Cannot lock process. Lockfile already exists.')
+			self.locked = self.is_locked()
+			return False
 
-		for category in categories:
-			scrolled_window = Gtk.ScrolledWindow()
-			scrolled_window.set_policy(
-				Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+	def is_locked(self):
 
-			model = Gtk.ListStore(GdkPixbuf.Pixbuf, str, str)
-			setattr(self, category, Gtk.IconView.new_with_model(model))
-			page = getattr(self, category)
-			page.set_selection_mode(Gtk.SelectionMode.NONE)
-			page.set_activate_on_single_click(True)
-			page.connect('item-activated', self.send_emoji)
-			page.set_pixbuf_column(0)
-			page.set_tooltip_column(1)
-			page.set_columns(12)
-			scrolled_window.add(page)
-			label = Gtk.Box(spacing=2)
-			image = Gtk.Image.new_from_file(os.path.join(
-				data_dir, 'category_icons', category + '.png'))
-			text = Gtk.Label(category.title())
-			label.pack_start(image, True, True, 0)
-			label.pack_start(text, True, True, 0)
-			image.show()
-			text.show()
-			notebook.append_page(scrolled_window, label)
+		try:
+			with open(self.lock_path) as fd:
+				try:
+					os.kill(int(fd.read()), 0)
+					return True
+				except OSError:
+					print('Lockfile found but the process is not running.')
+					try:
+						os.remove(self.lock_path)
+						print('Lockfile removed')
+					except PermissionError:
+						print('Permission denied. Please remove manually:\n',
+							self.lock_path)
+					return False
+		except FileNotFoundError:
+			return False
 
-		for emoji in emojis:
-			name = emojis[emoji]['name']
-			category = emojis[emoji]['category']
-			codepoint = emojis[emoji]['unicode']
-			try:
-				iconview = getattr(self, category)
-				model = iconview.get_model()
-				pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.path.join(
-					data_dir, 'png', codepoint + '.png'))
-				model.append([pixbuf, name, emoji])
-			except AttributeError:
-				pass
+	def unlock(self):
 
-		self.build_recent()
+		try:
+			os.remove(self.lock_path)
+			return True
+		except PermissionError:
+			print('Cannot remove lockfile. Permissions changed.')
+			return False
+		except FileNotFoundError:
+			return True
 
-	def build_recent(self):
 
-		iconview = getattr(self, 'recent')
-		model = iconview.get_model()
-		model.clear()
-		for emoji in recent:
-			name = emojis[emoji]['name']
-			codepoint = emojis[emoji]['unicode']
-			pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.path.join(
-				data_dir, 'png', codepoint + '.png'))
-			model.append([pixbuf, name, emoji])
+class Command(object):
 
-	def show_window(self, window):
+	def __init__(self):
 
-		if self.position:
-			self.move(*self.position)
-		self.visible = True
+		parser = self.get_parser()
+		self.args = parser.parse_args()
 
-	def hide_window(self, window, event):
-
-		self.position = self.get_position()
-		self.hide_on_delete()
-		self.visible = False
-		return True
-
-	def send_emoji(self, widget, path):
-
-		global recent
-		model = widget.get_model()
-		key = model[path][2]
-		if key in recent:
-			recent.remove(key)
-		recent.appendleft(key)
-		self.build_recent()
-		codepoint = emojis[key]['unicode']
-		if '-' in codepoint:
-			split = codepoint.split('-')
-			paste(chr(int(split[0], 16)) + chr(int(split[1], 16)))
+		if shared.lock.locked:
+			if self.args.quit:
+				shared.connection.send(self.args.quit)
+				sys.exit(0)
+			elif self.args.actions:
+				for action in self.args.actions:
+					shared.connection.send(action)
+				sys.exit(0)
+			else:
+				shared.connection.send('show_keyboard')
+				sys.exit(0)
 		else:
-			paste(chr(int(codepoint, 16)))
+			if self.args.quit:
+				sys.exit(0)
+			elif self.args.actions:
+				Thread(target=self.runner).start()
+
+	def get_parser(self):
+
+		parser = argparse.ArgumentParser(
+			description='Virtual keyboard-like emoji picker.\n\n'
+				+ 'Running emoji-keyboard without arguments starts indicator\n'
+				+ 'or toggles the visibility of keyboard window if indicator\n'
+				+ 'is already running.')
+		parser.add_argument(
+			'-k', '--toggle-keyboard',
+			help='toggle the visibility of keyboard window',
+			dest='actions',
+			action='append_const',
+			const='show_keyboard')
+		parser.add_argument(
+			'-s', '--toggle-search',
+			help='toggle the visibility of search window',
+			dest='actions',
+			action='append_const',
+			const='search')
+		parser.add_argument(
+			'-p', '--preferences',
+			help='open preferences',
+			dest='actions',
+			action='append_const',
+			const='settings')
+		parser.add_argument(
+			'-q', '--quit',
+			help='send exit signal to the indicator',
+			dest='quit',
+			action='store_const',
+			const='menu_quit',
+			default=None)
+		return parser
+
+	def runner(self):
+
+		while 'indicator' not in dir(shared):
+			time.sleep(0.1)
+		for action in self.args.actions:
+			GLib.idle_add(getattr(shared.indicator, action).activate)
+
+
+class Connection(Thread):
+
+	def __init__(self):
+
+		Thread.__init__(self)
+		self.name = 'Listener'
+		self.address = ('127.0.0.1', 6000)
+		self.auth = b'emoji-keyboard'
+
+	def run(self):
+
+		listener = Listener(self.address, authkey=self.auth)
+		while True:
+			with listener.accept() as connection:
+				msg = connection.recv()
+				if msg == 'exit':
+					break
+				else:
+					GLib.idle_add(getattr(shared.indicator, msg).activate)
+		listener.close()
+
+	def send(self, msg):
+
+		try:
+			connection = Client(self.address, authkey=self.auth)
+			connection.send(msg)
+			connection.close()
+		except ConnectionRefusedError:
+			print('Connection Refused')
 
 
 class Clipboard(object):
@@ -260,7 +224,7 @@ class Manager(object):
 
 	def __init__(self):
 
-		self.launcher = os.path.join(data_dir, 'emoji-keyboard.desktop')
+		self.launcher = os.path.join(shared.data_dir, 'emoji-keyboard.desktop')
 		self.starter = os.path.expanduser(
 			'~/.config/autostart/emoji-keyboard.desktop')
 
@@ -288,3 +252,11 @@ class Manager(object):
 				os.remove(self.starter)
 			except FileNotFoundError:
 				pass
+
+	def exit(self, SIG=None, frame=None):
+
+		shared.main_loop.quit()
+		shared.connection.send('exit')
+		self.save_recent()
+		shared.lock.unlock()
+		sys.exit(0)

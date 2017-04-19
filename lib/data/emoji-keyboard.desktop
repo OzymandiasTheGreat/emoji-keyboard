@@ -8,3 +8,16 @@ Type=Application
 Icon=face-smile
 Categories=Utility
 X-GNOME-Autostart-enabled=true
+Actions=Keyboard;Search;Prefs;
+
+[Desktop Action Keyboard]
+Name=Show Keyboard
+Exec=emoji-keyboard --toggle-keyboard
+
+[Desktop Action Search]
+Name=Search
+Exec=emoji-keyboard --toggle-search
+
+[Desktop Action Prefs]
+Name=Preferences
+Exec=emoji-keyboard --preferences

@@ -1,110 +1,36 @@
 #!/usr/bin/env python3
 
-import os
-import sys
-import threading
-from multiprocessing.connection import Client, Listener
-from gi.repository import Gtk, GLib, AppIndicator3
+import signal
 try:
-	from emoji_keyboard import emoji_lib
+	from emoji_keyboard import emoji_shared as shared
+	from emoji_keyboard import emoji_lib as lib
+	from emoji_keyboard import emoji_gtk as egtk
 except ImportError:
-	from lib import emoji_lib
+	from lib import emoji_shared as shared
+	from lib import emoji_lib as lib
+	from lib import emoji_gtk as egtk
 
-lock_file = '/tmp/emoji-keyboard.pid'
-address = ('localhost', 6000)
-auth = b'emoji-keyboard'
+handled_signals = {signal.SIGHUP, signal.SIGQUIT, signal.SIGTERM}
 
-def exit_():
+shared.lock = lib.Lock()                # Initialize lock, checks if lockfile
+										# exists
+shared.connection = lib.Connection()    # Initialize connection for sending,
+										# but don't start the thread yet
+shared.command = lib.Command()          # Parse command line flags and decide
+										# if continue
+										# The rest only runs if continue
+shared.lock.lock()                      # Create lockfile
+shared.manager = lib.Manager()
+shared.clipboard = lib.Clipboard()
+shared.emoji = egtk.Emoji()
+shared.keyboard = egtk.Keyboard()
+shared.search = egtk.Search()
+shared.prefs = egtk.Preferences()
+shared.indicator = egtk.Indicator()     # Again, initialize and store in shared
+										# namespace, but don't start the main loop
 
-	emoji_lib.save_recent()
-	client_send('close')
-	listener_thread.join()
-	os.remove(lock_file)
+for SIG in handled_signals:
+	signal.signal(SIG, shared.manager.exit)
 
-
-class Indicator(object):
-
-	def __init__(self):
-
-		self.indicator = AppIndicator3.Indicator.new(
-			'emoji-keyboard',
-			'face-smile',
-			AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
-		self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
-		self.indicator.set_menu(self.build_menu())
-		self.indicator.set_secondary_activate_target(self.show_picker)
-		self.lock_file()
-		Gtk.main()
-
-	def build_menu(self):
-
-		menu = Gtk.Menu()
-		self.show_picker = Gtk.ImageMenuItem('Show Keyboard')
-		icon_picker = Gtk.Image.new_from_icon_name('keyboard', 22)
-		self.show_picker.set_image(icon_picker)
-		self.show_picker.connect('activate', self.toggle_picker)
-		menu_quit = Gtk.ImageMenuItem('Quit')
-		icon_quit = Gtk.Image.new_from_icon_name('application-exit', 22)
-		menu_quit.set_image(icon_quit)
-		menu_quit.connect('activate', self.quit)
-		menu.append(self.show_picker)
-		menu.append(menu_quit)
-		menu.show_all()
-		return menu
-
-	def toggle_picker(self, menu_item):
-
-		if picker.visible:
-			picker.close()
-		else:
-			picker.show_all()
-
-	def quit(self, menu_item):
-
-		Gtk.main_quit()
-		exit_()
-		sys.exit(0)
-
-	def lock_file(self):
-
-		with open(lock_file, 'w') as lf:
-			lf.write(str(os.getpid()))
-
-def listener():
-
-	listener = Listener(address, authkey=auth)
-	while True:
-		connection = listener.accept()
-		msg = connection.recv()
-		if msg == 'toggle':
-			if picker.visible:
-				GLib.idle_add(picker.close)
-			else:
-				GLib.idle_add(picker.show_all)
-		elif msg == 'close':
-			connection.close()
-			break
-	listener.close()
-
-def client_send(msg):
-
-	connection = Client(address, authkey=auth)
-	connection.send(msg)
-	connection.close()
-
-try:
-	with open(lock_file) as lf:
-		try:
-			os.kill(int(lf.read()), 0)
-			client_send('toggle')
-			sys.exit(0)
-		except OSError:
-			pass
-except OSError:
-	pass
-
-picker = emoji_lib.Picker()
-listener_thread = threading.Thread(
-	target=listener, name='Listener', daemon=True)
-listener_thread.start()
-Indicator()
+shared.connection.start()               # Now we can start listener and main loop
+shared.indicator.start()

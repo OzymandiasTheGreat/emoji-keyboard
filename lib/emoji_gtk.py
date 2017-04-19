@@ -3,15 +3,17 @@
 import os
 import sys
 import json
-from collections import OrderedDict, deque
+from collections import OrderedDict
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
-from gi.repository import Gtk, AppIndicator3, Gdk, GdkPixbuf
-import emoji_shared as shared
-import emoji_lib as lib
-import timeit
-
+from gi.repository import Gtk, AppIndicator3, Gdk, GdkPixbuf, GLib
+try:
+	from emoji_keyboard import emoji_shared as shared
+	from emoji_keyboard import emoji_lib as lib
+except ImportError:
+	from . import emoji_shared as shared
+	from . import emoji_lib as lib
 
 class Indicator(object):
 
@@ -24,7 +26,6 @@ class Indicator(object):
 		self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
 		self.indicator.set_menu(self.build_menu())
 		self.indicator.set_secondary_activate_target(self.show_keyboard)
-		Gtk.main()
 
 	def build_menu(self):
 
@@ -41,22 +42,20 @@ class Indicator(object):
 		icon_settings = Gtk.Image.new_from_icon_name('configure', 22)
 		self.settings.set_image(icon_settings)
 		self.settings.connect('activate', self.show_settings)
-		menu_quit = Gtk.ImageMenuItem('Quit')
+		self.menu_quit = Gtk.ImageMenuItem('Quit')
 		icon_quit = Gtk.Image.new_from_icon_name('application-exit', 22)
-		menu_quit.set_image(icon_quit)
-		menu_quit.connect('activate', self.quit)
+		self.menu_quit.set_image(icon_quit)
+		self.menu_quit.connect('activate', self.quit)
 		menu.append(self.show_keyboard)
 		menu.append(self.search)
 		menu.append(self.settings)
-		menu.append(menu_quit)
+		menu.append(self.menu_quit)
 		menu.show_all()
 		return menu
 
 	def quit(self, menu_item):
 
-		Gtk.main_quit()
-		#~ exit_()
-		sys.exit(0)
+		shared.manager.exit()
 
 	def toggle_keyboard(self, menu_item):
 
@@ -75,6 +74,11 @@ class Indicator(object):
 	def show_settings(self, menu_item):
 
 		shared.prefs.show_all()
+
+	def start(self):
+
+		shared.main_loop = GLib.MainLoop()
+		shared.main_loop.run()
 
 
 class Emoji(object):
@@ -204,6 +208,17 @@ class Emoji(object):
 			self.suggestion_iters.append(tree_iter)
 		self.previous_key = key
 		return result
+
+	def match_short(self, completion, key, tree_iter, udata):
+
+		model = completion.get_model()
+		match = True if model[tree_iter][1].startswith(key) else False
+		if key != self.previous_key:
+			self.suggestion_iters = []
+		if match:
+			self.suggestion_iters.append(tree_iter)
+		self.previous_key = key
+		return match
 
 	def sort_full(self, model, a_iter, b_iter, udata_key):
 
@@ -353,6 +368,7 @@ class Search(Gtk.Window):
 		self.short_completer.pack_start(short_pixbuf_cell, False)
 		self.short_completer.add_attribute(short_pixbuf_cell, 'pixbuf', 0)
 		self.short_completer.set_text_column(1)
+		self.short_completer.set_match_func(shared.emoji.match_short, None)
 
 		self.entry.connect('changed', self.set_model)
 		self.entry.connect('activate', self.select_first)
@@ -397,17 +413,27 @@ class Search(Gtk.Window):
 
 	def paste_emoji(self, completer, model, tree_iter):
 
-		string = []
+		shortname = model[tree_iter][1]
 		codepoint = model[tree_iter][3]
 		if '-' in codepoint:
-			for char in codepoint.split('-'):
-				string.append(chr(int(char, 16)))
+			sequence = codepoint.split('-')
+			string = chr(int(sequence[0], 16)) + chr(int(sequence[1], 16))
 		else:
-			string.append(chr(int(codepoint, 16)))
+			string = chr(int(codepoint, 16))
+
 		self.entry.set_text('')
 		# When selecting match with mouse window.close() doesn't seem to work
 		self.hide_window(self, None)
-		shared.clipboard.paste(''.join(string))
+		shared.clipboard.paste(string)
+
+		if shortname in shared.recent:
+			shared.recent.remove(shortname)
+		shared.recent.appendleft(shortname)
+		shared.emoji.categories['recent'].get_model().refilter()
+		# Need to trigger resort when emoji already in recent gets used again
+		shared.emoji.categories['recent'].set_sort_func(
+			1, shared.emoji.sort_recent, None)
+
 		return True
 
 
@@ -505,12 +531,3 @@ class Preferences(Gtk.Window):
 	def set_keyboard_layout(self, widget, pspec):
 
 		shared.settings['keyboard_use_compact'] = widget.get_active()
-
-
-shared.manager = lib.Manager()
-shared.prefs = Preferences()
-shared.emoji = Emoji()
-shared.clipboard = lib.Clipboard()
-shared.keyboard = Keyboard()
-shared.search = Search()
-shared.indicator = Indicator()
