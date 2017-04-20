@@ -1,2 +1,2 @@
-include LICENSE README.md emoji-keyboard.desktop
+include LICENSE README.md
 recursive-include lib/data *

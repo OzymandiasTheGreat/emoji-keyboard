@@ -232,6 +232,20 @@ class Emoji(object):
 		else:
 			return 0
 
+	def full_highlighter(self, completion, renderer, model, tree_iter, udata):
+
+		keys = completion.get_entry().get_text()
+		string = model[tree_iter][4]
+		for key in keys.split():
+			string = string.replace(key, '<b>{0}</b>'.format(key))
+		renderer.props.markup = string
+
+	def short_highlighter(self, completion, renderer, model, tree_iter, udata):
+
+		key = completion.get_entry().get_text()
+		string = model[tree_iter][1].replace(key, '<b>{0}</b>'.format(key))
+		renderer.props.markup = string
+
 
 class Keyboard(Gtk.Window):
 
@@ -359,7 +373,10 @@ class Search(Gtk.Window):
 		full_pixbuf_cell = Gtk.CellRendererPixbuf()
 		self.full_completer.pack_start(full_pixbuf_cell, False)
 		self.full_completer.add_attribute(full_pixbuf_cell, 'pixbuf', 0)
-		self.full_completer.set_text_column(4)
+		full_text_cell = Gtk.CellRendererText()
+		self.full_completer.pack_start(full_text_cell, True)
+		self.full_completer.set_cell_data_func(
+			full_text_cell, shared.emoji.full_highlighter, None)
 		self.full_completer.set_match_func(shared.emoji.match_full, None)
 
 		self.short_completer = Gtk.EntryCompletion()
@@ -367,7 +384,10 @@ class Search(Gtk.Window):
 		short_pixbuf_cell = Gtk.CellRendererPixbuf()
 		self.short_completer.pack_start(short_pixbuf_cell, False)
 		self.short_completer.add_attribute(short_pixbuf_cell, 'pixbuf', 0)
-		self.short_completer.set_text_column(1)
+		short_text_cell = Gtk.CellRendererText()
+		self.short_completer.pack_start(short_text_cell, True)
+		self.short_completer.set_cell_data_func(
+			short_text_cell, shared.emoji.short_highlighter, None)
 		self.short_completer.set_match_func(shared.emoji.match_short, None)
 
 		self.entry.connect('changed', self.set_model)

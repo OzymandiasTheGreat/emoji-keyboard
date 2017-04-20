@@ -3,9 +3,9 @@
 import os
 from setuptools import setup
 
-src_dir = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(src_dir, 'README.md')) as readme:
-	long_description = readme.read()
+src_dir = os.path.dirname(__file__)
+with open(os.path.join(src_dir, 'README.md')) as fd:
+	long_description = fd.read()
 
 classifiers = [
 	'Development Status :: 5 - Production/Stable',
@@ -18,22 +18,15 @@ classifiers = [
 	'Programming Language :: Python :: 3 :: Only',
 	'Topic :: Utilities']
 
-data_files = [
-	('share/applications', [
-		'emoji-keyboard.desktop'])]
+data_files = [('share/applications', ['lib/data/emoji-keyboard.desktop'])]
 
 if os.geteuid() == 0:
-	data_files.append(('/etc/xdg/autostart', [
-		'emoji-keyboard.desktop']))
-#~ else:
-	#~ data_files.append((os.path.expanduser('~/.config/autostart'), [
-		#~ 'emoji-keyboard.desktop']))
-# The above bit should set app to autostart on user installs but absolute path
-# is treated like relative with --user option
+	data_files.append(
+		('/etc/xdg/autostart', ['lib/data/emoji-keyboard.desktop']))
 
 setup(
 	name='emoji-keyboard',
-	version='1.0.0',
+	version='2.0.0',
 	description='Virtual keyboard-like emoji picker',
 	long_description=long_description,
 	url='https://github.com/OzymandiasTheGreat/emoji-keyboard',
@@ -44,9 +37,11 @@ setup(
 	package_dir={'emoji_keyboard': 'lib'},
 	packages=['emoji_keyboard'],
 	package_data={'emoji_keyboard': [
-		'data/*.json', 'data/png/*.png', 'data/category_icons/*.png']},
+		'data/*.json',
+		'data/svg/*.svg',
+		'data/category_icons/*.svg',
+		'data/emoji-keyboard.desktop']},
 	data_files=data_files,
 	scripts=['emoji-keyboard'],
-	# Causes unsatisfiable dependencies in the deb
-	# install_requires=['python3-xlib'],
+	install_requires=['python3-xlib']
 )
