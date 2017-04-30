@@ -215,7 +215,7 @@ class Clipboard(object):
 		self.local_display.ungrab_keyboard(X.CurrentTime)
 		self.local_display.flush()
 
-		time.sleep(0.1)
+		time.sleep(0.5)
 		self.clipboard.set_text(clipboard_contents, -1)
 		self.clipboard.store()
 
