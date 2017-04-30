@@ -183,7 +183,7 @@ class Clipboard(object):
 		clipboard_contents = (clipboard_contents if clipboard_contents else '')
 		self.clipboard.set_text(string, -1)
 		self.clipboard.store()
-		time.sleep(0.2)
+		time.sleep(1)
 
 		window = self.local_display.get_input_focus().focus
 		window.grab_keyboard(
@@ -216,7 +216,7 @@ class Clipboard(object):
 		self.local_display.ungrab_keyboard(X.CurrentTime)
 		self.local_display.flush()
 
-		time.sleep(0.2)
+		time.sleep(1)
 		self.clipboard.set_text(clipboard_contents, -1)
 		self.clipboard.store()
 
