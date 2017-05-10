@@ -22,6 +22,7 @@ shared.command = lib.Command()          # Parse command line flags and decide
 shared.lock.lock()                      # Create lockfile
 shared.manager = lib.Manager()
 shared.clipboard = lib.Clipboard()
+shared.clipboard.start()
 shared.emoji = egtk.Emoji()
 shared.keyboard = egtk.Keyboard()
 shared.search = egtk.Search()
