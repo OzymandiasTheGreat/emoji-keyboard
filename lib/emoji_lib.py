@@ -172,7 +172,7 @@ class Clipboard(Thread):
 
 	def __init__(self):
 
-		Thread.__init__(self, name='Clipboard')
+		Thread.__init__(self, name='Clipboard', daemon=True)
 		self.queue = Queue()
 
 		self.local_display = display.Display()
