@@ -26,7 +26,7 @@ if os.geteuid() == 0:
 
 setup(
 	name='emoji-keyboard',
-	version='2.0.0',
+	version='2.1.0',
 	description='Virtual keyboard-like emoji picker',
 	long_description=long_description,
 	url='https://github.com/OzymandiasTheGreat/emoji-keyboard',
