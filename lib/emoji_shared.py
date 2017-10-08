@@ -32,7 +32,7 @@ icon = 'face-smile'
 try:
 	with open(settings_file) as fd:
 		settings = json.loads(fd.read())
-except (FileNotFoundError, json.decoder.JSONDecodeError):
+except (FileNotFoundError, ValueError):
 	settings = {'tone': None,
 				'emoji_size': 32,
 				'keyboard_use_compact': False,
@@ -50,7 +50,7 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
 try:
 	with open(recent_file) as fd:
 		recent = deque(json.loads(fd.read()), maxlen=48)
-except (FileNotFoundError, json.decoder.JSONDecodeError):
+except (FileNotFoundError, ValueError):
 	recent = deque(maxlen=48)
 	try:
 		os.remove(recent_file)
