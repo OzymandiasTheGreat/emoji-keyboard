@@ -32,6 +32,10 @@ icon = 'face-smile'
 try:
 	with open(settings_file) as fd:
 		settings = json.loads(fd.read())
+		if 'emoji_set' not in settings:
+			settings['emoji_set'] = 'emojitwo'
+			settings['use_indicator'] = True
+			settings['type_on_select'] = True
 except (FileNotFoundError, ValueError):
 	settings = {'tone': None,
 				'emoji_size': 32,
@@ -41,7 +45,10 @@ except (FileNotFoundError, ValueError):
 				'keyboard_columns_full': 16,
 				'keyboard_size_compact': (375, 250),
 				'keyboard_columns_compact': 7,
-				'search_pos': (0, 0)}
+				'search_pos': (0, 0),
+				'emoji_set': 'emojitwo',
+				'use_indicator': True,
+				'type_on_select': True}
 	try:
 		os.remove(settings_file)
 	except FileNotFoundError:

@@ -15,6 +15,41 @@ except ImportError:
 	from . import emoji_shared as shared
 	from . import emoji_lib as lib
 
+
+class DummyIndicator(object):
+
+	def quit(self):
+
+		shared.manager.exit()
+
+	def menu_quit(self):
+
+		self.quit()
+
+	def show_keyboard(self):
+
+		if shared.keyboard_visible:
+			shared.keyboard.close()
+		else:
+			shared.keyboard.show_all()
+
+	def search(self):
+
+		if shared.search_visible:
+			shared.search.close()
+		else:
+			shared.search.show_all()
+
+	def settings(self):
+
+		shared.prefs.show_all()
+
+	def start(self):
+
+		shared.main_loop = GLib.MainLoop()
+		shared.main_loop.run()
+
+
 class Indicator(object):
 
 	def __init__(self):
@@ -107,11 +142,10 @@ class Emoji(object):
 		base_props = {}
 		for emoji in emoji_raw:
 			category = emoji_raw[emoji]['category']
-			codepoint = emoji_raw[emoji]['unicode']
-			if codepoint in shared.emoji_modifier_base:
-				base_props[codepoint] = emoji_raw[emoji]
-			if '-' in codepoint:
-				main_codepoint = codepoint.split('-')[0]
+			if emoji in shared.emoji_modifier_base:
+				base_props[emoji] = emoji_raw[emoji]
+			if '-' in emoji:
+				main_codepoint = emoji.split('-')[0]
 				if main_codepoint in shared.emoji_modifier_base:
 					shortname = base_props[main_codepoint]['shortname']
 					description = (base_props[main_codepoint]['name']
@@ -128,13 +162,18 @@ class Emoji(object):
 				description = (emoji_raw[emoji]['name']
 								+ '. Keywords: '
 								+ ' '.join(emoji_raw[emoji]['keywords']))
-			pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-				os.path.join(shared.data_dir, 'svg', codepoint + '.svg'),
-				shared.settings['emoji_size'],
-				shared.settings['emoji_size'],
-				True)
-			model.append(
-				[pixbuf, shortname, category, codepoint, description])
+			path = os.path.join(
+					shared.data_dir,
+					shared.settings['emoji_set'],
+					emoji + '.svg')
+			if os.access(path, os.F_OK):
+				pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+					path,
+					shared.settings['emoji_size'],
+					shared.settings['emoji_size'],
+					True)
+				model.append(
+					[pixbuf, shortname, category, emoji, description])
 		return model
 
 	def filter_tone(self, model, tree_iter, udata):
@@ -285,7 +324,7 @@ class Keyboard(Gtk.Window):
 			label = Gtk.Box(spacing=2)
 			pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(
 				shared.data_dir,
-				'category_icons',
+				'category-icons',
 				shared.categories[category] + '.svg'),
 				16, 16, True)
 			image = Gtk.Image.new_from_pixbuf(pixbuf)
@@ -476,15 +515,72 @@ class Preferences(Gtk.Window):
 		autostart_switch.connect('notify::active', self.set_autostart)
 		grid.attach(autostart_switch, 4, 0, 3, 1)
 
+		select_label = Gtk.Label('On selecting emoji:')
+		grid.attach(select_label, 1, 1, 3, 1)
+		type_button = Gtk.RadioButton.new_with_label(None, 'Type')
+		type_button.set_mode(False)
+		grid.attach(type_button, 1, 2, 3, 1)
+		copy_button = Gtk.RadioButton.new_with_label_from_widget(
+			type_button, 'Copy')
+		copy_button.set_mode(False)
+		grid.attach_next_to(copy_button, type_button, 1, 3, 1)
+		if not shared.settings['type_on_select']:
+			copy_button.set_active(True)
+		type_button.connect('toggled', self.set_select_action)
+		copy_button.connect('toggled', self.set_select_action)
+
+		set_label = Gtk.Label('Select emoji set*:')
+		grid.attach(set_label, 1, 3, 3, 1)
+		emojitwo = Gtk.RadioButton.new(None)
+		emojitwo.set_mode(False)
+		emojitwo.set_tooltip_text('Emoji Two')
+		emojitwo.set_name('emojitwo')
+		pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+			os.path.join(shared.data_dir, 'emojitwo/1f642.svg'),
+			24, 24, True)
+		image = Gtk.Image.new_from_pixbuf(pixbuf)
+		emojitwo.set_image(image)
+		emojitwo.connect('toggled', self.set_emoji_set)
+		grid.attach(emojitwo, 1, 4, 2, 1)
+		twemoji = Gtk.RadioButton.new_from_widget(emojitwo)
+		twemoji.set_mode(False)
+		twemoji.set_tooltip_text('Twitter Emoji')
+		twemoji.set_name('twemoji')
+		pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+			os.path.join(shared.data_dir, 'twemoji/1f642.svg'),
+			24, 24, True)
+		image = Gtk.Image.new_from_pixbuf(pixbuf)
+		twemoji.set_image(image)
+		if shared.settings['emoji_set'] == 'twemoji':
+			twemoji.set_active(True)
+		twemoji.connect('toggled', self.set_emoji_set)
+		grid.attach_next_to(twemoji, emojitwo, 1, 2, 1)
+		noto_emoji = Gtk.RadioButton.new_from_widget(twemoji)
+		noto_emoji.set_mode(False)
+		noto_emoji.set_tooltip_text('Noto Emoji')
+		noto_emoji.set_name('noto-emoji')
+		pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+			os.path.join(shared.data_dir, 'noto-emoji/1f642.svg'),
+			24, 24, True)
+		image = Gtk.Image.new_from_pixbuf(pixbuf)
+		noto_emoji.set_image(image)
+		if shared.settings['emoji_set'] == 'noto-emoji':
+			noto_emoji.set_active(True)
+		noto_emoji.connect('toggled', self.set_emoji_set)
+		grid.attach_next_to(noto_emoji, twemoji, 1, 2, 1)
+
 		tone_label = Gtk.Label('Select skin tone for people emoji*:')
-		grid.attach(tone_label, 1, 1, 5, 1)
+		grid.attach(tone_label, 1, 5, 5, 1)
 		previous_button = None
 		for modifier in shared.emoji_modifiers:
 			button = Gtk.RadioButton.new_from_widget(previous_button)
 			button.set_mode(False)
 			if modifier:
 				pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-					os.path.join(shared.data_dir, 'svg', modifier + '.svg'),
+					os.path.join(
+						shared.data_dir,
+						'emojitwo',
+						modifier + '.svg'),
 					24, 24,
 					True)
 				# Abusing name property to store data. Does make for clean code.
@@ -502,11 +598,11 @@ class Preferences(Gtk.Window):
 			if previous_button:
 				grid.attach_next_to(button, previous_button, 1, 1, 1)
 			else:
-				grid.attach(button, 1, 2, 1, 1)
+				grid.attach(button, 1, 6, 1, 1)
 			previous_button = button
 
 		size_label = Gtk.Label('Emoji size*:')
-		grid.attach(size_label, 1, 3, 2, 1)
+		grid.attach(size_label, 1, 7, 2, 1)
 		adjustment = Gtk.Adjustment(32, 16, 64, 1, 16, 0)
 		size_spinner = Gtk.SpinButton()
 		size_spinner.set_adjustment(adjustment)
@@ -514,17 +610,24 @@ class Preferences(Gtk.Window):
 		size_spinner.set_digits(0)
 		size_spinner.set_value(shared.settings['emoji_size'])
 		size_spinner.connect('value-changed', self.set_emoji_size)
-		grid.attach(size_spinner, 4, 3, 3, 1)
+		grid.attach(size_spinner, 4, 7, 3, 1)
 
 		layout_label = Gtk.Label('Use compact layout*:')
-		grid.attach(layout_label, 1, 4, 3, 1)
+		grid.attach(layout_label, 1, 8, 3, 1)
 		layout_switch = Gtk.Switch()
 		layout_switch.set_active(shared.settings['keyboard_use_compact'])
 		layout_switch.connect('notify::active', self.set_keyboard_layout)
-		grid.attach(layout_switch, 4, 4, 3, 1)
+		grid.attach(layout_switch, 4, 8, 3, 1)
+
+		indicator_label = Gtk.Label('Show indicator*:')
+		grid.attach(indicator_label, 1, 9, 3, 1)
+		indicator = Gtk.Switch()
+		indicator.set_active(shared.settings['use_indicator'])
+		indicator.connect('notify::active', self.set_indicator)
+		grid.attach(indicator, 4, 9, 3, 1)
 
 		warning_label = Gtk.Label('* requires restart')
-		grid.attach(warning_label, 1, 5, 3, 1)
+		grid.attach(warning_label, 1, 10, 3, 1)
 
 	def hide_window(self, window, event):
 
@@ -535,6 +638,15 @@ class Preferences(Gtk.Window):
 	def set_autostart(self, widget, pspec):
 
 		shared.manager.set_autostart(widget.get_active())
+
+	def set_select_action(self, button):
+
+		if button.get_label() == 'Type':
+			shared.settings['type_on_select'] = button.get_active()
+
+	def set_emoji_set(self, button):
+
+		shared.settings['emoji_set'] = button.get_name()
 
 	def set_emoji_tone(self, button):
 
@@ -551,3 +663,7 @@ class Preferences(Gtk.Window):
 	def set_keyboard_layout(self, widget, pspec):
 
 		shared.settings['keyboard_use_compact'] = widget.get_active()
+
+	def set_indicator(self, widget, pspec):
+
+		shared.settings['use_indicator'] = widget.get_active()

@@ -6,14 +6,13 @@ import shutil
 import sys
 import time
 import json
+from subprocess import run, PIPE
 from threading import Thread
-from queue import Queue
 from multiprocessing.connection import Client, Listener
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
-from Xlib import X, XK, display, Xatom
-from Xlib.protocol import event
+from evdev import UInput, ecodes as e
 try:
 	from emoji_keyboard import emoji_shared as shared
 except ImportError:
@@ -133,8 +132,13 @@ class Command(object):
 
 		while 'indicator' not in dir(shared):
 			time.sleep(0.1)
-		for action in self.args.actions:
-			GLib.idle_add(getattr(shared.indicator, action).activate)
+		print(shared.settings['use_indicator'])
+		if shared.settings['use_indicator']:
+			for action in self.args.actions:
+				GLib.idle_add(getattr(shared.indicator, action).activate)
+		else:
+			for action in self.args.actions:
+				GLib.idle_add(getattr(shared.indicator, action))
 
 
 class Connection(Thread):
@@ -155,7 +159,10 @@ class Connection(Thread):
 				if msg == 'exit':
 					break
 				else:
-					GLib.idle_add(getattr(shared.indicator, msg).activate)
+					if shared.settings['use_indicator']:
+						GLib.idle_add(getattr(shared.indicator, msg).activate)
+					else:
+						GLib.idle_add(getattr(shared.indicator, msg))
 		listener.close()
 
 	def send(self, msg):
@@ -168,140 +175,45 @@ class Connection(Thread):
 			print('Connection Refused')
 
 
-class Clipboard(Thread):
+class Clipboard(object):
 
 	def __init__(self):
 
-		Thread.__init__(self, name='Clipboard', daemon=True)
-		self.queue = Queue()
+		xclip = shutil.which('xclip')
+		xsel = shutil.which('xsel')
+		if xclip:
+			self.get_cmd = [xclip, '-o', '-selection', 'clipboard']
+			self.set_cmd = [xclip, '-i', '-selection', 'clipboard']
+		elif xsel:
+			self.get_cmd = [xsel, '--output', '--clipboard']
+			self.set_cmd = [xsel, '--input', '--clipboard']
+		else:
+			sys.exit('You need either xclip or xsel for emoji-keyboard to work')
 
-		self.local_display = display.Display()
-		self.root_window = self.local_display.screen().root
-		self.clipboard_display = display.Display()
-		self.window = self.clipboard_display.screen().root.create_window(
-			0, 0, 1, 1, 0, X.CopyFromParent)
-		self.window.set_wm_name('emoji-keyboard')
-		self.clipboard = self.clipboard_display.get_atom('CLIPBOARD')
-		self.targets = self.clipboard_display.get_atom('TARGETS')
-		self.utf8 = self.clipboard_display.get_atom('UTF8_STRING')
+	def get(self):
 
-		self.gtk_clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-		self.paste_key = (
-			self.local_display.keysym_to_keycode(XK.XK_v), X.ControlMask)
+		process = run(self.get_cmd, stdout=PIPE, universal_newlines=True)
+		return process.stdout
 
-	def stop(self):
+	def set(self, string):
 
-		self.queue.put_nowait(None)
-
-	def set_text(self, string):
-
-		self.queue.put_nowait(string)
-
-	def run(self):
-
-		while True:
-			string = self.queue.get()
-			self.queue.task_done()
-			if string is None:
-				break
-
-			if 'last_event' not in locals():
-				last_event = None
-			self.window.set_selection_owner(self.clipboard, X.CurrentTime)
-			if (self.clipboard_display.get_selection_owner(self.clipboard)
-				== self.window):
-				while True:
-					if last_event:
-						local_event = last_event
-					else:
-						local_event = self.clipboard_display.next_event()
-
-					if (local_event.type == X.SelectionRequest
-						and local_event.owner == self.window
-						and local_event.selection == self.clipboard):
-
-						client = local_event.requestor
-						if local_event.property == X.NONE:
-							client_prop = local_event.target
-						else:
-							client_prop = local_event.property
-
-						if local_event.target == self.targets:
-							prop_value = [self.targets, self.utf8]
-							prop_type = Xatom.ATOM
-							prop_format = 32
-						elif local_event.target == self.utf8:
-							prop_value = string.encode()
-							prop_type = self.utf8
-							prop_format = 8
-						else:
-							client_prop = X.NONE
-
-						if not self.queue.empty():
-							last_event = local_event
-							break
-						else:
-							if client_prop != X.NONE:
-								client.change_property(
-									client_prop,
-									prop_type,
-									prop_format,
-									prop_value)
-							selection_notify = event.SelectionNotify(
-								time=local_event.time,
-								requestor=local_event.requestor,
-								selection=local_event.selection,
-								target=local_event.target,
-								property=client_prop)
-							client.send_event(selection_notify)
-							last_event = None
-
-					elif (local_event.type == X.SelectionClear
-						and local_event.window == self.window
-						and local_event.atom == self.clipboard):
-
-						last_event = None
-						break    # Lost ownership of CLIPBOARD
+		run(self.set_cmd, input=string, universal_newlines=True)
 
 	def paste(self, string):
 
-		clipboard_contents = self.gtk_clipboard.wait_for_text()
-		clipboard_contents = (clipboard_contents if clipboard_contents else '')
-		self.set_text(string)
+		backup = self.get()
+		self.set(string)
 
-		window = self.local_display.get_input_focus().focus
-		window.grab_keyboard(
-			False, X.GrabModeAsync, X.GrabModeAsync, X.CurrentTime)
-		self.local_display.flush()
-		key_press = event.KeyPress(detail=self.paste_key[0],
-									time=X.CurrentTime,
-									root=self.root_window,
-									window=window,
-									child=X.NONE,
-									root_x=0,
-									root_y=0,
-									event_x=0,
-									event_y=0,
-									state=self.paste_key[1],
-									same_screen=1)
-		key_release = event.KeyRelease(detail=self.paste_key[0],
-										time=X.CurrentTime,
-										root=self.root_window,
-										window=window,
-										child=X.NONE,
-										root_x=0,
-										root_y=0,
-										event_x=0,
-										event_y=0,
-										state=self.paste_key[1],
-										same_screen=1)
-		window.send_event(key_press)
-		window.send_event(key_release)
-		self.local_display.ungrab_keyboard(X.CurrentTime)
-		self.local_display.flush()
+		if shared.settings['type_on_select']:
+			with UInput() as uinput:
+				uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
+				uinput.write(e.EV_KEY, e.KEY_V, 1)
+				uinput.syn()
+				uinput.write(e.EV_KEY, e.KEY_V, 0)
+				uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+				uinput.syn()
 
-		time.sleep(0.2)
-		self.set_text(clipboard_contents)
+			self.set(backup)
 
 
 class Manager(object):
@@ -340,7 +252,6 @@ class Manager(object):
 	def exit(self, SIG=None, frame=None):
 
 		shared.main_loop.quit()
-		shared.clipboard.stop()
 		shared.connection.send('exit')
 		self.save_recent()
 		shared.lock.unlock()

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import signal
 try:
 	from emoji_keyboard import emoji_shared as shared
 	from emoji_keyboard import emoji_lib as lib
@@ -9,8 +8,6 @@ except ImportError:
 	from lib import emoji_shared as shared
 	from lib import emoji_lib as lib
 	from lib import emoji_gtk as egtk
-
-handled_signals = {signal.SIGHUP, signal.SIGQUIT, signal.SIGTERM}
 
 shared.lock = lib.Lock()                # Initialize lock, checks if lockfile
 										# exists
@@ -22,16 +19,15 @@ shared.command = lib.Command()          # Parse command line flags and decide
 shared.lock.lock()                      # Create lockfile
 shared.manager = lib.Manager()
 shared.clipboard = lib.Clipboard()
-shared.clipboard.start()
 shared.emoji = egtk.Emoji()
 shared.keyboard = egtk.Keyboard()
 shared.search = egtk.Search()
 shared.prefs = egtk.Preferences()
-shared.indicator = egtk.Indicator()     # Again, initialize and store in shared
+if shared.settings['use_indicator']:
+	shared.indicator = egtk.Indicator() # Again, initialize and store in shared
 										# namespace, but don't start the main loop
-
-for SIG in handled_signals:
-	signal.signal(SIG, shared.manager.exit)
+else:
+	shared.indicator = egtk.DummyIndicator()
 
 shared.connection.start()               # Now we can start listener and main loop
 shared.indicator.start()

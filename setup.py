@@ -43,5 +43,5 @@ setup(
 		'data/emoji-keyboard.desktop']},
 	data_files=data_files,
 	scripts=['emoji-keyboard'],
-	install_requires=['python3-xlib']
+	install_requires=['evdev']
 )
