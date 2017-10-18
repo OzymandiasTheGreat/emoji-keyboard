@@ -6,14 +6,19 @@ import json
 from collections import OrderedDict
 import gi
 gi.require_version('Gtk', '3.0')
-gi.require_version('AppIndicator3', '0.1')
-from gi.repository import Gtk, AppIndicator3, Gdk, GdkPixbuf, GLib
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
 try:
 	from emoji_keyboard import emoji_shared as shared
 	from emoji_keyboard import emoji_lib as lib
 except ImportError:
 	from . import emoji_shared as shared
 	from . import emoji_lib as lib
+try:
+	gi.require_version('AppIndicator3', '0.1')
+	from gi.repository import AppIndicator3
+except (ValueError, ImportError):
+	shared.settings['use_indicator'] = False
+
 
 
 class DummyIndicator(object):
@@ -483,7 +488,7 @@ class Search(Gtk.Window):
 		self.entry.set_text('')
 		# When selecting match with mouse window.close() doesn't seem to work
 		self.hide_window(self, None)
-		shared.clipboard.paste(string)
+		GLib.idle_add(shared.clipboard.paste, string)
 
 		if shortname in shared.recent:
 			shared.recent.remove(shortname)

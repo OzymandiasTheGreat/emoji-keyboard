@@ -126,13 +126,17 @@ class Command(object):
 			action='store_const',
 			const='menu_quit',
 			default=None)
+		parser.add_argument(
+			'-v', '--version',
+			help='print version and quit',
+			action='version',
+			version='%(prog)s ' + shared.version)
 		return parser
 
 	def runner(self):
 
 		while 'indicator' not in dir(shared):
 			time.sleep(0.1)
-		print(shared.settings['use_indicator'])
 		if shared.settings['use_indicator']:
 			for action in self.args.actions:
 				GLib.idle_add(getattr(shared.indicator, action).activate)

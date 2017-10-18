@@ -2,6 +2,7 @@
 
 import os
 from setuptools import setup
+from lib.emoji_shared import version
 
 src_dir = os.path.dirname(__file__)
 with open(os.path.join(src_dir, 'README.md')) as fd:
@@ -26,7 +27,7 @@ if os.geteuid() == 0:
 
 setup(
 	name='emoji-keyboard',
-	version='2.1.0',
+	version=version,
 	description='Virtual keyboard-like emoji picker',
 	long_description=long_description,
 	url='https://github.com/OzymandiasTheGreat/emoji-keyboard',
@@ -38,8 +39,7 @@ setup(
 	packages=['emoji_keyboard'],
 	package_data={'emoji_keyboard': [
 		'data/*.json',
-		'data/svg/*.svg',
-		'data/category_icons/*.svg',
+		'data/*/*.svg',
 		'data/emoji-keyboard.desktop']},
 	data_files=data_files,
 	scripts=['emoji-keyboard'],

@@ -1,19 +1,32 @@
 # Emoji keyboard
 
-Virtual keyboard-like emoji picker for linux.
+Virtual keyboard-like emoji picker for Linux.
 
-This project uses artwork and data from the excellent
-[EmojiOne project](http://emojione.com/).
+Emoji artwork and metadata provided by [Emoji Two](https://emojitwo.github.io/)
+by [Ranks.com](http://www.ranks.com/) and is licensed under
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+Additional artwork provided by
+[Twitter Emoji](https://github.com/twitter/twemoji)
+([CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode)) and
+[Noto Emoji](https://github.com/googlei18n/noto-emoji)
+([Apache 2.0](https://github.com/googlei18n/noto-emoji/blob/master/LICENSE)).
 
 ## Installation
 
 ### Dependencies
 
-You'll need Python 3 GObject bindings and python3-xlib package.
-If you're on a debian based distro you can install them with
+**Dependency change: python3-xlib has been dropped in favor of python3-evdev**
 
-`sudo apt install python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0
-gir1.2-appindicator3-0.1 python3-xlib`
+You'll need Python 3.5+ and GObject bindings, as well as python3-evdev package.
+If you're on a Debian based distro you can install them with
+
+`sudo apt install python3 python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0
+python3-evdev`
+
+Optionally, if you want indicator in the panel:
+
+`sudo apt install gir1.2-appindicator3-0.1`
 
 ### App
 
@@ -46,7 +59,7 @@ into focused application.
 
 ### Search
 
-You can search by oficial unicode name or by :shortname:.
+You can search by official unicode name or by :shortname:.
 Pressing `enter` will select and type the first result.
 
 ### Hotkeys

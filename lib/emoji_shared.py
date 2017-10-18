@@ -4,6 +4,8 @@ import os
 import json
 from collections import OrderedDict, deque
 
+version = '2.2.0'
+
 emoji_modifier_base = {
 	'1f590', '1f468', '1f46e', '1f595', '1f3c3', '1f935', '1f646', '1f449',
 	'1f477', '1f91c', '1f486', '1f6b6', '1f919', '1f930', '1f44b', '1f933',
