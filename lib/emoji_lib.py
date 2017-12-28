@@ -6,13 +6,19 @@ import shutil
 import sys
 import time
 import json
-from subprocess import run, PIPE
+from subprocess import run, PIPE, DEVNULL
 from threading import Thread
 from multiprocessing.connection import Client, Listener
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
 from evdev import UInput, ecodes as e
+try:
+	from Xlib import X, XK, display, Xatom
+	from Xlib.protocol import event
+	xlib = True
+except ImportError:
+	xlib = False
 try:
 	from emoji_keyboard import emoji_shared as shared
 except ImportError:
@@ -183,41 +189,109 @@ class Clipboard(object):
 
 	def __init__(self):
 
-		xclip = shutil.which('xclip')
-		xsel = shutil.which('xsel')
-		if xclip:
-			self.get_cmd = [xclip, '-o', '-selection', 'clipboard']
-			self.set_cmd = [xclip, '-i', '-selection', 'clipboard']
-		elif xsel:
-			self.get_cmd = [xsel, '--output', '--clipboard']
-			self.set_cmd = [xsel, '--input', '--clipboard']
-		else:
-			sys.exit('You need either xclip or xsel for emoji-keyboard to work')
+		self.xclip = shutil.which('xclip')
+		self.xclip_get = [self.xclip, '-o', '-selection', 'clipboard']
+		self.xclip_set = [self.xclip, '-i', '-selection', 'clipboard']
+		self.xsel = shutil.which('xsel')
+		self.xsel_get = [self.xsel, '--output', '--clipboard']
+		self.xsel_set = [self.xsel, '--input', '--clipboard']
+		self.gtkclipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+		if xlib:
+			self.display = display.Display()
+			self.root = self.display.screen().root
 
 	def get(self):
 
-		process = run(self.get_cmd, stdout=PIPE, universal_newlines=True)
-		return process.stdout
+		if self.xclip:
+			process = run(
+				self.xclip_get, stdout=PIPE, stderr=DEVNULL,
+				universal_newlines=True)
+			return process.stdout
+		elif self.xsel:
+			process = run(
+				self.xsel_get, stdout=PIPE, stderr=DEVNULL,
+				universal_newlines=True)
+			return process.stdout
+		else:
+			content = self.gtkclipboard.wait_for_text()
+			if content:
+				return content
+			else:
+				return ''
 
 	def set(self, string):
 
-		run(self.set_cmd, input=string, universal_newlines=True)
+		if self.xclip:
+			run(self.xclip_set, input=string, universal_newlines=True)
+		elif self.xsel:
+			run(self.xsel_set, input=string, universal_newlines=True)
+		else:
+			self.gtkclipboard.set_text(string, -1)
+		return False
+
+	def paste_evdev(self):
+
+		with UInput() as uinput:
+			uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
+			uinput.write(e.EV_KEY, shared.keycode - 8, 1)
+			uinput.syn()
+			uinput.write(e.EV_KEY, shared.keycode - 8, 0)
+			uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+			uinput.syn()
+
+	def paste_xlib(self):
+
+		window = self.display.get_input_focus().focus
+		window.grab_keyboard(
+			False, X.GrabModeAsync, X.GrabModeAsync, X.CurrentTime)
+		self.display.flush()
+		key_press = event.KeyPress(detail=shared.keycode,
+									time=X.CurrentTime,
+									root=self.root,
+									window=window,
+									child=X.NONE,
+									root_x=0,
+									root_y=0,
+									event_x=0,
+									event_y=0,
+									state=X.ControlMask,
+									same_screen=1)
+		key_release = event.KeyRelease(detail=shared.keycode,
+										time=X.CurrentTime,
+										root=self.root,
+										window=window,
+										child=X.NONE,
+										root_x=0,
+										root_y=0,
+										event_x=0,
+										event_y=0,
+										state=X.ControlMask,
+										same_screen=1)
+		window.send_event(key_press)
+		window.send_event(key_release)
+		self.display.ungrab_keyboard(X.CurrentTime)
+		self.display.flush()
 
 	def paste(self, string):
 
 		backup = self.get()
 		self.set(string)
 
-		if shared.settings['type_on_select']:
-			with UInput() as uinput:
-				uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
-				uinput.write(e.EV_KEY, e.KEY_V, 1)
-				uinput.syn()
-				uinput.write(e.EV_KEY, e.KEY_V, 0)
-				uinput.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
-				uinput.syn()
+		def paste():
 
-			self.set(backup)
+			if shared.settings['type_on_select']:
+				if shared.wayland:
+					self.paste_evdev()
+				else:
+					if xlib:
+						self.paste_xlib()
+					else:
+						self.paste_evdev()
+
+				GLib.timeout_add(200, self.set, backup)
+			return False
+
+		GLib.timeout_add(50, paste)
 
 
 class Manager(object):

@@ -28,6 +28,23 @@ Optionally, if you want indicator in the panel:
 
 `sudo apt install gir1.2-appindicator3-0.1`
 
+If you're still on X, **DO** install python3-xlib. This will perform better and won't require modifications to the system.
+Prefer pip version if possible, because the one in debian archives is ancient.
+
+`pip3 install python-xlib`
+
+**IF YOU'RE ON WAYLAND**
+You'll need to:
+- Create `uinput` group `sudo addgroup uinput`
+- Add yourself to this group `sudo adduser $(whoami) uinput`
+- Create udev rule. In the terminal type this:
+	- `sudo nano /etc/udev/rules.d/uinput.rules`
+	- `KERNEL=="uinput", GROUP="uinput", MODE="0660"`
+	- To save press `Ctrl+o` `Enter` `Ctrl+x`
+
+This will allow your user to create virtual devices for pasting emoji, without these steps Type mode WILL NOT WORK.
+
+
 ### App
 
 There are several ways to install the app, you can install from deb you can

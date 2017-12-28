@@ -3,8 +3,12 @@
 import os
 import json
 from collections import OrderedDict, deque
+from subprocess import run, PIPE
+import gi
+gi.require_version('Gdk', '3.0')
+from gi.repository import Gdk
 
-version = '2.2.0'
+version = '2.3.0'
 
 emoji_modifier_base = {
 	'1f590', '1f468', '1f46e', '1f595', '1f3c3', '1f935', '1f646', '1f449',
@@ -68,3 +72,29 @@ except (FileNotFoundError, ValueError):
 
 keyboard_visible = False
 search_visible = False
+
+def check_wayland():
+
+	sessions = run(
+		['loginctl', 'list-sessions'], stdout=PIPE, universal_newlines=True)
+	for line in sessions.stdout.split('\n'):
+		if os.getenv('USER') in line:
+			session = line.split()[0]
+	type_ = run(
+		['loginctl', 'show-session', session, '-p', 'Type', '--value'],
+		stdout=PIPE, universal_newlines=True)
+	if type_.stdout == 'x11\n':
+		return False
+	return True
+
+def get_keycode():
+
+	keymap = Gdk.Keymap.get_default()
+	key_list = keymap.get_entries_for_keyval(Gdk.KEY_v)
+	try:
+		return key_list[1][1].keycode
+	except IndexError:
+		return key_list[1][0].keycode
+
+wayland = check_wayland()
+keycode = get_keycode()

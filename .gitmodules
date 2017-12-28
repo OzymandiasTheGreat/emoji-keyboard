@@ -1,9 +1,10 @@
 [submodule "noto-emoji"]
 	path = noto-emoji
 	url = https://github.com/googlei18n/noto-emoji.git
-[submodule "twemoji"]
-	path = twemoji
-	url = https://github.com/twitter/twemoji.git
 [submodule "emojitwo"]
 	path = emojitwo
 	url = https://github.com/EmojiTwo/emojitwo.git
+[submodule "twemoji"]
+	path = twemoji
+	url = https://github.com/twitter/twemoji.git
+	branch = gh-pages

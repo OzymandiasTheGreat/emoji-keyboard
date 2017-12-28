@@ -3,16 +3,16 @@
 from pathlib import Path
 
 emoji_json = Path('emojitwo/emoji.json')
-res_emoji_json = Path('data/emoji.json')
+res_emoji_json = Path('lib/data/emoji.json')
 cat_icons = Path('emojitwo/other/category_icons')
-res_cat_icons = Path('data/category-icons')
+res_cat_icons = Path('lib/data/category-icons')
 emojitwo = Path('emojitwo/svg')
-res_emojitwo = Path('data/emojitwo')
+res_emojitwo = Path('lib/data/emojitwo')
 twemoji = Path('twemoji/2/svg')
-res_twemoji = Path('data/twemoji')
+res_twemoji = Path('lib/data/twemoji')
 noto_emoji = Path('noto-emoji/svg')
 noto_flags = Path('noto-emoji/third_party/region-flags/svg')
-res_noto_emoji = Path('data/noto-emoji')
+res_noto_emoji = Path('lib/data/noto-emoji')
 ignore_chars = [
 	'200d', # zero-width joiner
 	'fe0f', # variant form

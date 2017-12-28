@@ -35,8 +35,8 @@ setup(
 	author_email='tomas.rav@gmail.com',
 	license='GPLv3+',
 	classifiers=classifiers,
-	package_dir={'emoji_keyboard': 'lib'},
 	packages=['emoji_keyboard'],
+	package_dir={'emoji_keyboard': 'lib'},
 	package_data={'emoji_keyboard': [
 		'data/*.json',
 		'data/*/*.svg',

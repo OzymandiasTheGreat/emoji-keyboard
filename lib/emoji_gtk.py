@@ -378,12 +378,18 @@ class Keyboard(Gtk.Window):
 		shortname = model[path][1]
 		codepoint = model[path][3]
 
+		if shared.wayland:
+			self.hide()
 		if '-' in codepoint:
 			sequence = codepoint.split('-')
 			string = chr(int(sequence[0], 16)) + chr(int(sequence[1], 16))
 		else:
 			string = chr(int(codepoint, 16))
-		shared.clipboard.paste(string)
+		if shared.wayland:
+			GLib.idle_add(shared.clipboard.paste, string)
+			GLib.timeout_add(100, self.show_all)
+		else:
+			shared.clipboard.paste(string)
 
 		if shortname in shared.recent:
 			shared.recent.remove(shortname)
