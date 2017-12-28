@@ -47,9 +47,9 @@ This will allow your user to create virtual devices for pasting emoji, without t
 
 ### App
 
-There are several ways to install the app, you can install from deb you can
+There are several ways to install the app, ~~you can install from deb you can
 find on
-[releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases).
+[releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases)~~.
 
 You can install with pip
 
