@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FreeFileSync XmlFormat="8" XmlType="GUI">
+    <MainConfig>
+        <Comparison>
+            <Variant>TimeAndSize</Variant>
+            <Symlinks>Exclude</Symlinks>
+            <IgnoreTimeShift/>
+        </Comparison>
+        <SyncConfig>
+            <Variant>TwoWay</Variant>
+            <DetectMovedFiles>true</DetectMovedFiles>
+            <DeletionPolicy>RecycleBin</DeletionPolicy>
+            <VersioningFolder Style="Replace">/media/ozymandias/Dodo/Backup/ozymandias/Recovery/%date%</VersioningFolder>
+        </SyncConfig>
+        <GlobalFilter>
+            <Include>
+                <Item>lib/*</Item>
+                <Item>emoji-keyboard</Item>
+            </Include>
+            <Exclude>
+                <Item>/.Trash-*/</Item>
+                <Item>/.recycle/</Item>
+                <Item>*/__pycache__/*</Item>
+            </Exclude>
+            <TimeSpan Type="None">0</TimeSpan>
+            <SizeMin Unit="None">0</SizeMin>
+            <SizeMax Unit="None">0</SizeMax>
+        </GlobalFilter>
+        <FolderPairs>
+            <Pair>
+                <Left>/home/ozymandias/Projects/emoji-keyboard</Left>
+                <Right>/home/ozymandias/VirtualBox VMs/Shared/Projects/emoji-keyboard</Right>
+            </Pair>
+        </FolderPairs>
+        <IgnoreErrors>true</IgnoreErrors>
+        <PostSyncCommand Condition="Completion"/>
+    </MainConfig>
+    <GuiConfig>
+        <MiddleGridView>Action</MiddleGridView>
+    </GuiConfig>
+</FreeFileSync>
