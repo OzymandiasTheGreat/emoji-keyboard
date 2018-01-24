@@ -1,9 +1,5 @@
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/zEig29HrXXTTPEH8HY8Qmk5p/maximegris/angular-electron'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/zEig29HrXXTTPEH8HY8Qmk5p/maximegris/angular-electron.svg' />
-</a>
+[![Angular Logo](./logo-angular.jpg)](https://angular.io/) [![Electron Logo](./logo-electron.jpg)](https://electron.atom.io/)
 
-<a href='https://angular.io/'><img src='./logo-angular.jpg' width='75' alt='Angular Logo'></a>
-<a href='https://electron.atom.io/'><img src='./logo-electron.jpg' alt='Electron Logo'></a>
 
 [![Travis Build Status][build-badge]][build]
 [![Dependencies Status][dependencyci-badge]][dependencyci]
