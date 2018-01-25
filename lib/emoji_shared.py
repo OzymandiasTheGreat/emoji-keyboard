@@ -78,12 +78,12 @@ def check_wayland():
 	sessions = run(
 		['loginctl', 'list-sessions'], stdout=PIPE, universal_newlines=True)
 	for line in sessions.stdout.split('\n'):
-		if os.getenv('USER') in line:
+		if os.getlogin() in line:
 			session = line.split()[0]
 	type_ = run(
-		['loginctl', 'show-session', session, '-p', 'Type', '--value'],
+		['loginctl', 'show-session', session, '-p', 'Type'],
 		stdout=PIPE, universal_newlines=True)
-	if type_.stdout == 'x11\n':
+	if type_.stdout == 'Type=x11\n':
 		return False
 	return True
 
