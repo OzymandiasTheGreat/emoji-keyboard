@@ -16,10 +16,10 @@ Bootstrap and package your project with Angular 5(+) and Electron (Typescript + 
 
 Currently runs with:
 
-- Angular v5.2.0
+- Angular v5.2.5
 - Angular-CLI v1.6.4
-- Electron v1.7.8
-- Electron Builder v19.45.4
+- Electron v1.8.2
+- Electron Builder v20.0.4
 
 With this sample, you can :
 
@@ -60,39 +60,25 @@ The application code is managed by `main.ts`. In this sample, the app runs with 
 The Angular component contains an example of Electron and NodeJS native lib import. See [Use NodeJS Native libraries](#use-nodejs-native-libraries) charpter if you want to import other native libraries in your project.
 You can desactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
-## To build for production
+## Manage your environment variables
 
-- Using development variables (environments/index.ts) :  `npm run electron:dev`
-- Using production variables (environments/index.prod.ts) :  `npm run electron:prod`
-
-Your built files are in the /dist folder.
+- Using local variables :  `npm start` or `cross-env ENV=local npm start`
+- Using development variables :  `cross-env ENV=dev npm start`
+- Using production variables  :  `cross-env ENV=rod npm start`
 
 ## Included Commands
 
 |Command|Description|
 |--|--|
-|`npm run start:web`| Execute the app in the browser |
+|`npm run ng:serve`| Execute the app in the browser |
+|`npm run build`| Build the app. Your built files are in the /dist folder. |
+|`npm run build:prod`| Build the app with Angular aot. Your built files are in the /dist folder. |
+|`npm run electron:local`| Builds your application and start electron
 |`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
 |`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
 |`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
 
-**Your application is optimised. Only the files of /dist folder are included in the executable.**
-
-## Use NodeJS Native libraries
-
-Actually Angular-Cli doesn't seem to be able to import nodeJS native libs or electron libs at compile time (Webpack error). This is (one of) the reason why webpack.config was ejected of ng-cli.
-If you need to use NodeJS native libraries, you **MUST** add it manually in the file `webpack.config.js` in root folder :
-
-```javascript
-  "externals": {
-    "electron": 'require(\'electron\')',
-    "child_process": 'require(\'child_process\')',
-    "fs": 'require(\'fs\')'
-    ...
-  },
-```
-
-Notice that all NodeJS v7 native libs are already added in this sample. Feel free to remove those you don't need.
+**Your application is optimised. Only /dist folder and node dependencies are included in the executable.**
 
 ## Browser mode
 
