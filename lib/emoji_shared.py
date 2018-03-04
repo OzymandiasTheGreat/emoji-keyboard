@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import getpass
 import json
 from collections import OrderedDict, deque
 from subprocess import run, PIPE
@@ -78,7 +79,7 @@ def check_wayland():
 	sessions = run(
 		['loginctl', 'list-sessions'], stdout=PIPE, universal_newlines=True)
 	for line in sessions.stdout.split('\n'):
-		if os.getlogin() in line:
+		if getpass.getuser() in line:
 			session = line.split()[0]
 	type_ = run(
 		['loginctl', 'show-session', session, '-p', 'Type'],
