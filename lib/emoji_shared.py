@@ -80,15 +80,19 @@ def check_wayland():
 		['loginctl', 'list-sessions'], stdout=PIPE, universal_newlines=True)
 	current_user = getpass.getuser()
 	current_user = current_user if current_user != 'root' else os.getlogin()
+	session = None
 	for line in sessions.stdout.split('\n'):
 		if current_user in line:
 			session = line.split()[0]
-	type_ = run(
-		['loginctl', 'show-session', session, '-p', 'Type'],
-		stdout=PIPE, universal_newlines=True)
-	if type_.stdout == 'Type=x11\n':
+	if session == None:
 		return False
-	return True
+	else:
+		type_ = run(
+			['loginctl', 'show-session', session, '-p', 'Type'],
+		stdout=PIPE, universal_newlines=True)
+		if type_.stdout == 'Type=x11\n':
+			return False
+		return True
 
 def get_keycode():
 
