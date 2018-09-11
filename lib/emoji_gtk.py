@@ -442,6 +442,7 @@ class Search(Gtk.Window):
 
 		self.entry.connect('changed', self.set_model)
 		self.entry.connect('activate', self.select_first)
+		self.entry.connect('key-press-event', self.key_press_event)
 		self.full_completer.connect('match-selected', self.paste_emoji)
 		self.short_completer.connect('match-selected', self.paste_emoji)
 		self.full_completer.connect('cursor-on-match', self.paste_emoji)
@@ -480,6 +481,11 @@ class Search(Gtk.Window):
 				model = completer.get_model()
 				tree_iter = shared.emoji.suggestion_iters[0]
 				self.paste_emoji(completer, model, tree_iter)
+
+	def key_press_event(self, entry, event):
+
+		if Gdk.keyval_name(event.keyval) == 'Escape':
+			self.hide_window(entry, event)
 
 	def paste_emoji(self, completer, model, tree_iter):
 
