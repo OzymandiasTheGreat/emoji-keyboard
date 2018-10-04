@@ -55,9 +55,9 @@ npm install -g @angular/cli
 
 Voila! You can use your Angular + Electron app in a local development environment with hot reload !
 
-The application code is managed by `main.ts`. In this sample, the app runs with a simple Electron window and "Developer Tools" is open.
-The Angular component contains an example of Electron and NodeJS native lib import. See [Use NodeJS Native libraries](#use-nodejs-native-libraries) charpter if you want to import other native libraries in your project.
-You can desactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
+The application code is managed by `main.ts`. In this sample, the app runs with a simple Angular App (http://localhost:4200) and an Electron window.
+The Angular component contains an example of Electron and NodeJS native lib import.
+You can disable "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 ## Included Commands
 
@@ -75,7 +75,7 @@ You can desactivate "Developer Tools" by commenting `win.webContents.openDevTool
 
 ## You want to use a specific lib (like rxjs) in electron main thread ?
 
-You can to this! Just by importing your library in npm dependencies (not devDependencies) with `npm install --save`. It will be loaded by electron during build phase and added to the final package. Then use your library by importing it in `main.ts` file. Easy no ?
+You can do this! Just by importing your library in npm dependencies (not devDependencies) with `npm install --save`. It will be loaded by electron during build phase and added to the final package. Then use your library by importing it in `main.ts` file. Easy no ?
 
 ## Browser mode
 
