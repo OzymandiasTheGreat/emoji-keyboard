@@ -76,6 +76,7 @@ search_visible = False
 
 def check_wayland():
 
+	session = ''
 	sessions = run(
 		['loginctl', 'list-sessions'], stdout=PIPE, universal_newlines=True)
 	current_user = getpass.getuser()
