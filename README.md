@@ -1,4 +1,4 @@
-[![Angular Logo](./logo-angular.jpg)](https://angular.io/) [![Electron Logo](./logo-electron.jpg)](https://electron.atom.io/)
+[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
 
 
 [![Travis Build Status][build-badge]][build]
@@ -16,8 +16,8 @@ Bootstrap and package your project with Angular 7 and Electron (Typescript + SAS
 
 Currently runs with:
 
-- Angular v7.0.3
-- Electron v3.0.2
+- Angular v7.1.4
+- Electron v4.0.0
 - Electron Builder v20.28.1
 
 With this sample, you can :
