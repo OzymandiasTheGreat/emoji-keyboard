@@ -3,6 +3,7 @@ os:
   - osx
 language: node_js
 node_js:
+  - '11'
   - '10'
 dist: xenial
 sudo: required
