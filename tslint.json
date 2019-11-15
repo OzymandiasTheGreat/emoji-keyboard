@@ -121,7 +121,8 @@
       }
     ],
     "unified-signatures": true,
-    "use-life-cycle-interface": true,
+    "use-lifecycle-interface": true,
+    "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "variable-name": false,
     "whitespace": [
