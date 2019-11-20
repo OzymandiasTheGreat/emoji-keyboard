@@ -53,7 +53,7 @@ find on
 
 You can install with pip
 
-`sudo pip3 install
+`pip3 install
 https://github.com/OzymandiasTheGreat/emoji-keyboard/archive/master.zip`
 
 There's also ppa, courtesy of [atareao](https://github.com/atareao)
