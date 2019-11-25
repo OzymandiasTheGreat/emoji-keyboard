@@ -8,9 +8,11 @@ by [Ranks.com](http://www.ranks.com/) and is licensed under
 
 Additional artwork provided by
 [Twitter Emoji](https://github.com/twitter/twemoji)
-([CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode)) and
+([CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode)),
 [Noto Emoji](https://github.com/googlei18n/noto-emoji)
-([Apache 2.0](https://github.com/googlei18n/noto-emoji/blob/master/LICENSE)).
+([Apache 2.0](https://github.com/googlei18n/noto-emoji/blob/master/LICENSE)) and
+[Blobmoji](https://github.com/C1710/blobmoji)
+([Apache 2.0](https://github.com/C1710/blobmoji/blob/master/LICENSE)).
 
 ## Installation
 
