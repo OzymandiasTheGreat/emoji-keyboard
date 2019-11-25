@@ -541,7 +541,7 @@ class Preferences(Gtk.Window):
 		copy_button.connect('toggled', self.set_select_action)
 
 		set_label = Gtk.Label('Select emoji set*:')
-		grid.attach(set_label, 1, 3, 3, 1)
+		grid.attach(set_label, 1, 4, 3, 1)
 		emojitwo = Gtk.RadioButton.new(None)
 		emojitwo.set_mode(False)
 		emojitwo.set_tooltip_text('Emoji Two')
@@ -579,6 +579,20 @@ class Preferences(Gtk.Window):
 			noto_emoji.set_active(True)
 		noto_emoji.connect('toggled', self.set_emoji_set)
 		grid.attach_next_to(noto_emoji, twemoji, 1, 2, 1)
+		blobmoji = Gtk.RadioButton.new_from_widget(noto_emoji)
+		blobmoji.set_mode(False)
+		blobmoji.set_tooltip_text('Blobmoji')
+		blobmoji.set_name('blobmoji')
+		pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+			os.path.join(shared.data_dir, 'blobmoji/1f642.svg'),
+			24, 24, True)
+		image = Gtk.Image.new_from_pixbuf(pixbuf)
+		blobmoji.set_image(image)
+		if shared.settings['emoji_set'] == 'blobmoji':
+			blobmoji.set_active(True)
+		blobmoji.connect('toggled', self.set_emoji_set)
+		grid.attach_next_to(blobmoji, noto_emoji, 1, 2, 1)
+
 
 		tone_label = Gtk.Label('Select skin tone for people emoji*:')
 		grid.attach(tone_label, 1, 5, 5, 1)
