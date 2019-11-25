@@ -541,7 +541,7 @@ class Preferences(Gtk.Window):
 		copy_button.connect('toggled', self.set_select_action)
 
 		set_label = Gtk.Label('Select emoji set*:')
-		grid.attach(set_label, 1, 4, 3, 1)
+		grid.attach(set_label, 1, 3, 4, 1)
 		emojitwo = Gtk.RadioButton.new(None)
 		emojitwo.set_mode(False)
 		emojitwo.set_tooltip_text('Emoji Two')
