@@ -7,7 +7,7 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-electron'),
+      require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -25,21 +25,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['AngularElectron'],
-    singleRun: true,
-    customLaunchers: {
-      AngularElectron: {
-        base: 'Electron',
-        browserWindowOptions: {
-          webPreferences: {
-            nodeIntegration: true,
-            allowRunningInsecureContent: true
-          }
-        }
-      }
-    },
-    client: {
-      useIframe: false
-    }
+    browsers: ['Chrome'],
+    singleRun: true
   });
 };

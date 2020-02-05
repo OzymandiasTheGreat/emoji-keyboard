@@ -2,12 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/e2e",
-    "module": "es2015",
-    "types": [
-      "mocha"
+    "module": "commonjs",
+    "target": "es5",
+    "types":[
+      "jasmine",
+      "node"
     ]
-  },
-  "include": [
-    "**/*.ts"
-  ]
+  }
 }

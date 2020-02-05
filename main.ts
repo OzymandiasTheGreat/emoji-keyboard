@@ -2,11 +2,11 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win: BrowserWindow = null;
-const args = process.argv.slice(1),
-    serve = args.some(val => val === '--serve');
+let win, serve;
+const args = process.argv.slice(1);
+serve = args.some(val => val === '--serve');
 
-function createWindow(): BrowserWindow {
+function createWindow() {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
@@ -16,11 +16,7 @@ function createWindow(): BrowserWindow {
     x: 0,
     y: 0,
     width: size.width,
-    height: size.height,
-    webPreferences: {
-      nodeIntegration: true,
-      allowRunningInsecureContent: (serve) ? true : false,
-    },
+    height: size.height
   });
 
   if (serve) {
@@ -36,9 +32,7 @@ function createWindow(): BrowserWindow {
     }));
   }
 
-  if (serve) {
-    win.webContents.openDevTools();
-  }
+  win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -48,7 +42,6 @@ function createWindow(): BrowserWindow {
     win = null;
   });
 
-  return win;
 }
 
 try {

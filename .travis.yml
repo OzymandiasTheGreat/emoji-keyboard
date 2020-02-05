@@ -1,17 +1,12 @@
-os:
-  - linux
-  - osx
 language: node_js
 node_js:
-  - '12'
-  - '11'
-  - '10'
-dist: xenial
+  - 8
 sudo: required
-services:
-  - xvfb
+addons:
+    chrome: stable
 before_script:
   - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 install:
   - npm set progress=false
   - npm install
