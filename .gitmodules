@@ -1,0 +1,18 @@
+[submodule "sources/noto-emoji"]
+	path = sources/noto-emoji
+	url = https://github.com/googlefonts/noto-emoji.git
+[submodule "sources/blobmoji"]
+	path = sources/blobmoji
+	url = https://github.com/C1710/blobmoji.git
+[submodule "sources/emojitwo"]
+	path = sources/emojitwo
+	url = https://github.com/EmojiTwo/emojitwo.git
+[submodule "sources/openmoji"]
+	path = sources/openmoji
+	url = https://github.com/hfg-gmuend/openmoji.git
+[submodule "sources/twemoji"]
+	path = sources/twemoji
+	url = https://github.com/twitter/twemoji.git
+[submodule "sources/emoji-data"]
+	path = sources/emoji-data
+	url = https://github.com/iamcal/emoji-data.git

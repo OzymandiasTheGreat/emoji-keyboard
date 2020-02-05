@@ -1,0 +1,16 @@
+[[package]]
+category = "dev"
+description = "ISO country, subdivision, language, currency and script definitions and their translations"
+name = "pycountry"
+optional = false
+python-versions = "*"
+version = "19.8.18"
+
+[metadata]
+content-hash = "98a08bd04639156a3eb2ed909fa9b458d720e8e16d988b979ed2742b47c89c86"
+python-versions = "^3.6"
+
+[metadata.files]
+pycountry = [
+    {file = "pycountry-19.8.18.tar.gz", hash = "sha256:3c57aa40adcf293d59bebaffbe60d8c39976fba78d846a018dc0c2ec9c6cb3cb"},
+]
