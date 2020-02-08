@@ -1,0 +1,16 @@
+<mz-tab
+	[fixedTabWidth]="'true'"
+	[swipeable]="'true'"
+	>
+	<mz-tab-item
+		*ngFor="let category of categories"
+		[label]="category.name"
+		[tabItemId]="category.name"
+		[class]="category.icon"
+		[active]="('/' + category.name) === router.url"
+		cdkTrapFocus
+		[cdkTrapFocusAutoCapture]="true"
+	>
+		<app-palette [items]="items[category.name]"></app-palette>
+	</mz-tab-item>
+</mz-tab>

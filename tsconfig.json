@@ -13,12 +13,14 @@
     "target": "es2015",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "typeRoots": [
       "node_modules/@types"
     ],
     "types": [
       "jquery",
-      "materialize-css"
+      "materialize-css",
+      "dom-inputevent"
     ],
     "lib": [
       "es2018",

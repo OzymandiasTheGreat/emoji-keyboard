@@ -1,9 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
-  margin: 0;
-  padding: 0;
+$mdi-font-path: "~@mdi/font/fonts";
+@import "~@mdi/font/scss/materialdesignicons.scss";
 
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+html, body {
+	margin: 0;
+	padding: 0;
+
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+
+// .menubar-menu-title::before {
+// 	content: "\F35C";
+// 	font-family: $mdi-font-family;
+// 	font-weight: normal;
+// 	font-size: 16px;
+// }
+
+.titlebar {
+	.window-title {
+		font-size: 14px !important;
+	}
+	.menubar {
+		.menubar-menu-button[aria-label="Menu"] {
+			@extend .mdi, .mdi-menu;
+			font-size: 24px;
+		}
+		.menubar-menu-button[aria-label="Search"] {
+			@extend .mdi, .mdi-magnify;
+			font-size: 24px;
+		}
+		.menubar-menu-title {
+			display: none;
+		}
+		.menubar-menu-container .action-item .action-menu-item {
+			font-size: 18px;
+			height: 2rem;
+			&:hover, &:focus, &:active {
+				background-color: #FFFFFF33 !important;
+			}
+			.menu-item-check, .menu-item-icon {
+				display: none;
+			}
+			.action-label, .keybinding {
+				font-size: 14px;
+			}
+		}
+	}
 }

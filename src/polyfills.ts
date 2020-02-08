@@ -82,3 +82,6 @@ import 'zone.js/dist/zone-mix';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+import * as jQuery from "jquery";
+import "materialize-css";
+window["$"] = jQuery;

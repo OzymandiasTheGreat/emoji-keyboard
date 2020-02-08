@@ -26,11 +26,12 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/materialize-css/dist/css/materialize.min.css"
+              "node_modules/materialize-css/dist/css/materialize.min.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/materialize-css/dist/js/materialize.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
             ]
           },
           "configurations": {
@@ -158,6 +159,11 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
     }
   }
 }
