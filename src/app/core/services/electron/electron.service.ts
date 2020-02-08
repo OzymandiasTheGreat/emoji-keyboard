@@ -6,7 +6,9 @@ import { ipcRenderer, webFrame, remote } from "electron";
 import * as childProcess from "child_process";
 import * as fs from "fs";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ElectronService {
 
 	ipcRenderer: typeof ipcRenderer;

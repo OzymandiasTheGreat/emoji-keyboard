@@ -2,20 +2,24 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
-const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+let win: BrowserWindow = null;
+const args = process.argv.slice(1),
+    serve = args.some(val => val === '--serve');
 
-function createWindow() {
+function createWindow(): BrowserWindow {
 
 
 	// Create the browser window.
 	win = new BrowserWindow({
 		x: 0,
 		y: 0,
-		width: 800,
-		height: 600,
-		frame: false
+		width: size.width,
+		height: size.height,
+		webPreferences: {
+			nodeIntegration: true,
+			allowRunningInsecureContent: (serve) ? true : false,
+		},
+		frame: false,
 	});
 
 	if (serve) {
@@ -31,7 +35,9 @@ function createWindow() {
 		}));
 	}
 
-	win.webContents.openDevTools();
+	if (serve) {
+		win.webContents.openDevTools();
+	}
 
 	// Emitted when the window is closed.
 	win.on('closed', () => {
@@ -41,6 +47,7 @@ function createWindow() {
 		win = null;
 	});
 
+  return win;
 }
 
 try {
