@@ -25,12 +25,14 @@
               "src/favicon.512x512.png"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/materialize-css/dist/css/materialize.min.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css"
             ],
-            "scripts": [],
-            "customWebpackConfig": {
-              "path": "./angular.webpack.js"
-            }
+            "scripts": [
+              "node_modules/materialize-css/dist/js/materialize.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+            ]
           },
           "configurations": {
             "dev": {
@@ -176,6 +178,11 @@
     },
     "@schematics/angular:directive": {
       "prefix": "app"
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
     }
   }
 }

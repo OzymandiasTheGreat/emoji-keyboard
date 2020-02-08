@@ -1,0 +1,7 @@
+.palette {
+	display: flex;
+	flex-flow: row wrap;
+	// display: grid;
+	// grid-template: repeat(auto-fill, minmax(48px, 1fr)) / repeat(auto-fill, minmax(48px, 1fr));
+	padding: 56px 8px 8px 8px;
+}
