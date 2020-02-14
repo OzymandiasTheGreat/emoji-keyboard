@@ -71,7 +71,6 @@ categories = [
 	},
 ]
 skinTones = [
-	'',
 	'1F3FB',
 	'1F3FC',
 	'1F3FD',
@@ -86,7 +85,7 @@ DATA = ASSETS / 'data'
 EMOJI = ASSETS / 'emoji'
 
 
-RAW_DATA = json.loads((SOURCE / 'emoji-data/emoji.json').read_text())
+RAW_DATA = json.loads((SOURCE / 'emoji-data/emoji_pretty.json').read_text())
 for rawEmoji in RAW_DATA:
 	codePoints = list(int(c, 16) for c in rawEmoji['unified'].split('-'))
 	emoji = {
@@ -96,7 +95,25 @@ for rawEmoji in RAW_DATA:
 		'char': ''.join(chr(c) for c in codePoints),
 		'shortText': rawEmoji['text'] if rawEmoji['text'] else '',
 		'shortName': ':{short_name}:'.format(short_name=rawEmoji['short_name']),
+		'skinTones': {},
 	}
+	for tone in skinTones:
+		if 'skin_variations' in rawEmoji:
+			try:
+				tonePoints = list(
+					int(c, 16)
+						for c in rawEmoji['skin_variations'][tone]['unified'].split('-')
+				)
+				imagePath = '{filepath}.svg'.format(
+					filepath=rawEmoji['skin_variations'][tone]['unified']
+				)
+			except KeyError:
+				pass
+		else:
+			tonePoints = codePoints
+			imagePath = emoji['imagePath']
+		emoji['skinTones'][tone] = {'codePoints': tonePoints, 'imagePath': imagePath}
+	emoji['skinTones'][None] = {'codePoints': codePoints, 'imagePath': emoji['imagePath']}
 	if rawEmoji['category'] in emojis:
 		emojis[rawEmoji['category']].append(emoji)
 	else:

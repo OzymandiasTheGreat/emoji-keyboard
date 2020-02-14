@@ -17,14 +17,11 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "types": [
-      "jquery",
-      "materialize-css",
-      "dom-inputevent"
-    ],
+    "types": [],
     "lib": [
       "es2018",
-      "dom"
+      "dom",
+      "DOM.Iterable"
     ]
   },
   "angularCompilerOptions": {

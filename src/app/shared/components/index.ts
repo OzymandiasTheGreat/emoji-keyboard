@@ -1,1 +1,2 @@
-export * from './page-not-found/page-not-found.component';
+export * from "./emoji/emoji.component";
+export * from "./palette/palette.component";

@@ -1,0 +1,12 @@
+<nav mat-tab-nav-bar mat-stretch-tabs class="mat-elevation-z3" color="accent" backgroundColor="primary" tabindex="0">
+	<a mat-tab-link
+		*ngFor="let category of categories"
+		[routerLink]="['/category', { outlets: { category: [ category.name ] } }]"
+		[active]="router.url === ('/category/(category:' + category.name + ')')"
+		tabindex="-1"
+	>
+		<mat-icon [svgIcon]="category.icon"></mat-icon>
+		<span class="tab-label">{{ compact ? '' : category.name }}</span>
+	</a>
+</nav>
+<router-outlet name="category"></router-outlet>

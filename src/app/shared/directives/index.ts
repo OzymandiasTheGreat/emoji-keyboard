@@ -1,1 +1,1 @@
-export * from './webview/webview.directive';
+export * from "./hotkey.directive";

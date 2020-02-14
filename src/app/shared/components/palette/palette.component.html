@@ -1,0 +1,3 @@
+<div class="palette" tabindex="0" (keydown)="onKeyDown($event)">
+	<app-emoji *ngFor="let item of items | async" [emoji]="item"></app-emoji>
+</div>
