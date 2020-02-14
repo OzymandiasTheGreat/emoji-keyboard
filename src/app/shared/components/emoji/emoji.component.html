@@ -1,0 +1,18 @@
+<div class="emoji-card" [class.active]="active" (click)="click()" tabindex="-1">
+	<img
+		class="emoji-icon"
+		[src]="getResource() | safeRes"
+		[alt]="emoji.char"
+	>
+	<div class="emoji-blob white">
+		<!-- <h5 class="emoji-name grey-text text-darken-2">
+			{{ emoji.name }}
+		</h5> -->
+		<p class="emoji-text">
+			{{ emoji.shortText }}
+		</p>
+		<p class="emoji-shortname">
+			{{ emoji.shortName }}
+		</p>
+	</div>
+</div>

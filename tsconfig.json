@@ -14,16 +14,11 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "types": [
-      "jquery",
-      "materialize-css",
-      "dom-inputevent"
-    ],
+    "types": [],
     "lib": [
-      "es2017",
-      "es2016",
-      "es2015",
-      "dom"
+      "es2018",
+      "dom",
+      "DOM.Iterable"
     ]
   },
   "include": [

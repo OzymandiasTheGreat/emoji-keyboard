@@ -1,109 +1,57 @@
-[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
+# Emoji keyboard
 
-![Maintained][maintained-badge]
-[![Travis Build Status][build-badge]][build]
-[![Make a pull request][prs-badge]][prs]
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
+Virtual keyboard-like emoji picker for Linux.
 
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
+Emoji artwork and metadata provided by [Emoji Two](https://emojitwo.github.io/)
+by [Ranks.com](http://www.ranks.com/) and is licensed under
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
 
-# Introduction
+Additional artwork provided by
+[Twitter Emoji](https://github.com/twitter/twemoji)
+([CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode)) and
+[Noto Emoji](https://github.com/googlei18n/noto-emoji)
+([Apache 2.0](https://github.com/googlei18n/noto-emoji/blob/master/LICENSE)).
 
-Bootstrap and package your project with Angular 8 and Electron (Typescript + SASS + Hot Reload) for creating Desktop applications.
+## Installation
 
-Currently runs with:
+You can install emoji keyboard from [pypi](https://pypi.org/project/emoji-keyboard).
 
-- Angular v9.0.0
-- Electron v8.0.0
-- Electron Builder v21.2.0
+First you need pip and pygobject bindings, on Debian based distros you can get them with:
 
-With this sample, you can :
+```sudo apt install python3-pip python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0```
 
-- Run your app in a local development environment with Electron & Hot reload
-- Run your app in a production environment
-- Package your app into an executable file for Linux, Windows & Mac
+Next run this command (on other distros it may just be `pip` depending on how you installed pip):
 
-/!\ Hot reload only pertains to the renderer process. The main electron process is not able to be hot reloaded, only restarted.
+```pip3 install --user https://github.com/OzymandiasTheGreat/emoji-keyboard/archive/master.zip```
 
-/!\ Angular 8.x CLI needs Node 10.9 or later to works correctly.
+Now start the indicator by running `emoji-keyboard` and start typing those emoji!
 
-## Getting Started
+## Usage
 
-Clone this repository locally :
+### Keyboard
 
-``` bash
-git clone https://github.com/maximegris/angular-electron.git
-```
+Selecting `Show Keyboard` from the app indicator menu or, if your desktop
+environment supports it, middle-clicking app indicator will toggle the visibility
+of the keyboard. When the picker is visible simply clicking on emoji will type it
+into focused application.
 
-Install dependencies with npm :
+### Search
 
-``` bash
-npm install
-```
+You can search by official unicode name or by :shortname:.
+Pressing `enter` will select and type the first result.
 
-There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
+### Hotkeys
 
+<<<<<<< HEAD
 If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
 Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
+=======
+`emoji-keyboard` can be controlled from the command line. Use your desktop's
+native hotkey utility to assign hotkeys to
 
-``` bash
-npm install -g @angular/cli
-```
+`emoji-keyboard -k` to toggle visibility of the keyboard,
+>>>>>>> -
 
-## To build for development
+`emoji-keyboard -s` to toggle visibility of the search window.
 
-- **in a terminal window** -> npm start
-
-Voila! You can use your Angular + Electron app in a local development environment with hot reload !
-
-The application code is managed by `main.ts`. In this sample, the app runs with a simple Angular App (http://localhost:4200) and an Electron window.
-The Angular component contains an example of Electron and NodeJS native lib import.
-You can disable "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
-
-## Included Commands
-
-|Command|Description|
-|--|--|
-|`npm run ng:serve:web`| Execute the app in the browser |
-|`npm run build`| Build the app. Your built files are in the /dist folder. |
-|`npm run build:prod`| Build the app with Angular aot. Your built files are in the /dist folder. |
-|`npm run electron:local`| Builds your application and start electron
-|`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
-|`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
-|`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
-
-**Your application is optimised. Only /dist folder and node dependencies are included in the executable.**
-
-## You want to use a specific lib (like rxjs) in electron main thread ?
-
-YES! You can do it! Just by importing your library in npm dependencies section (not **devDependencies**) with `npm install --save`. It will be loaded by electron during build phase and added to your final package. Then use your library by importing it in `main.ts` file. Quite simple, isn't it ?
-
-## Browser mode
-
-Maybe you want to execute the application in the browser with hot reload ? Just run `npm run ng:serve:web`.
-**Note that you can't use Electron or NodeJS native libraries in this case.** Please check `providers/electron.service.ts` to watch how conditional import of electron/Native libraries is done.
-
-## Branch & Packages version
-
-- Angular 4 & Electron 1 : Branch [angular4](https://github.com/maximegris/angular-electron/tree/angular4)
-- Angular 5 & Electron 1 : Branch [angular5](https://github.com/maximegris/angular-electron/tree/angular5)
-- Angular 6 & Electron 3 : Branch [angular6](https://github.com/maximegris/angular-electron/tree/angular6)
-- Angular 7 & Electron 3 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular7)
-- Angular 8 & Electron 7 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular8)
-- Angular 9 & Electron 8 : (master)
-
-[build-badge]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master&style=style=flat-square
-[build]: https://travis-ci.org/maximegris/angular-electron
-[license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=style=flat-square
-[license]: https://github.com/maximegris/angular-electron/blob/master/LICENSE.md
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
-[github-watch-badge]: https://img.shields.io/github/watchers/maximegris/angular-electron.svg?style=social
-[github-watch]: https://github.com/maximegris/angular-electron/watchers
-[github-star-badge]: https://img.shields.io/github/stars/maximegris/angular-electron.svg?style=social
-[github-star]: https://github.com/maximegris/angular-electron/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20angular-electron!%20https://github.com/maximegris/angular-electron%20%F0%9F%91%8D
-[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/maximegris/angular-electron.svg?style=social
-[maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen
+Run `emoji-keyboard -h` in the terminal to get full list of commands.

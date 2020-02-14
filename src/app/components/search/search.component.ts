@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { fromEvent, Subscription } from "rxjs";
-import { DataService, IEmoji } from "../../providers/data.service";
-import { PaletteComponent } from "../shared/palette/palette.component";
+import { PaletteComponent } from "../../shared/components";
 
 
 @Component({
@@ -12,21 +11,16 @@ import { PaletteComponent } from "../shared/palette/palette.component";
 export class SearchComponent implements OnInit, AfterViewInit {
 	@ViewChild("search") input: ElementRef<HTMLInputElement>;
 	@ViewChild(PaletteComponent) palette: PaletteComponent;
-	// private data: DataService;
-	results: IEmoji[];
-	inputSubscription: Subscription;
-	navSubscription: Subscription;
-	constructor(@Inject(DataService) private data: DataService) {
-		this.data = data;
-		this.results = [];
-	}
+	private inputSubscription: Subscription;
+	private navSubscription: Subscription;
+	public query;
+	constructor() {}
 
 	ngOnInit() {}
 
 	ngAfterViewInit() {
-		this.inputSubscription = fromEvent(this.input.nativeElement, "input").subscribe((e) => {
-			const query = (<HTMLInputElement>e.target).value ? (<HTMLInputElement>e.target).value : null;
-			this.results = this.data.getFilteredEmoji(query);
+		this.inputSubscription = fromEvent(this.input.nativeElement, "input").subscribe((e: InputEvent) => {
+			this.query = (<HTMLInputElement>e.target).value ? (<HTMLInputElement>e.target).value : null;
 		});
 		this.navSubscription = fromEvent(this.input.nativeElement, "keydown").subscribe((e: KeyboardEvent) => {
 			if (e.key === "ArrowDown") {
@@ -37,7 +31,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 				this.palette.keyManager.setPreviousItemActive();
 			} else if (e.key === "Enter") {
 				e.preventDefault();
-				this.palette.keyManager.activeItem.click(this.palette.keyManager.activeItem.emoji);
+				this.palette.keyManager.activeItem?.click();
 			}
 		});
 	}
