@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatIconRegistry } from "@angular/material/icon";
-import { DataService, ICategory, SettingsService } from "../../services";
+import { DirectoryService, DataService, ICategory, SettingsService } from "../../services";
 
 
 // const COMPACT = true;
@@ -17,6 +17,7 @@ export class TabbarComponent implements OnInit {
 	categories: Array<any>;
 	compact: boolean;
 	constructor(
+		@Inject(DirectoryService) private dir: DirectoryService,
 		@Inject(DataService) private data: DataService,
 		@Inject(SettingsService) private prefs: SettingsService,
 		@Inject(Router) public router: Router,
@@ -35,7 +36,7 @@ export class TabbarComponent implements OnInit {
 			registry.addSvgIcon(
 				category.icon,
 				sanitizer.bypassSecurityTrustResourceUrl(
-					`../../../assets/emoji/categories/${category.icon}`
+					this.dir.getAsset(`emoji/categories/${category.icon}`)
 				)
 			);
 		}

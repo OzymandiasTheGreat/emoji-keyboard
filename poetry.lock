@@ -1,16 +1,175 @@
 [[package]]
 category = "dev"
+description = "A simple wrapper around optparse for powerful command line utilities."
+name = "click"
+optional = false
+python-versions = "*"
+version = "6.7"
+
+[[package]]
+category = "main"
+description = "Bindings to the Linux input handling subsystem"
+marker = "sys_platform == \"linux\""
+name = "evdev"
+optional = false
+python-versions = "*"
+version = "1.3.0"
+
+[[package]]
+category = "dev"
+description = "Read resources from Python packages"
+marker = "python_version < \"3.7\""
+name = "importlib-resources"
+optional = false
+python-versions = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3"
+version = "1.0.2"
+
+[[package]]
+category = "main"
+description = "Full toolkit agnostic cross-platform clipboard access"
+name = "klembord"
+optional = false
+python-versions = ">=3.4,<4.0"
+version = "0.2.1"
+
+[package.dependencies]
+python-xlib = ">=0.26,<0.27"
+stopit = ">=1.1.2,<2.0.0"
+
+[[package]]
+category = "main"
+description = "Simple, cross-platform macros/GUI automation for python"
+name = "macpy"
+optional = false
+python-versions = ">=3.6,<4.0"
+version = "0.1.2"
+
+[package.dependencies]
+evdev = ">=1.3.0,<2.0.0"
+python-libinput = ">=0.1.0,<0.2.0"
+python-xlib = ">=0.26,<0.27"
+
+[[package]]
+category = "dev"
 description = "ISO country, subdivision, language, currency and script definitions and their translations"
 name = "pycountry"
 optional = false
 python-versions = "*"
 version = "19.8.18"
 
+[[package]]
+category = "main"
+description = "Object-oriented wrapper for libinput using ctypes"
+marker = "sys_platform == \"linux\""
+name = "python-libinput"
+optional = false
+python-versions = "*"
+version = "0.1.0"
+
+[[package]]
+category = "main"
+description = "Python X Library"
+marker = "sys_platform == \"linux\""
+name = "python-xlib"
+optional = false
+python-versions = "*"
+version = "0.26"
+
+[package.dependencies]
+six = ">=1.10.0"
+
+[[package]]
+category = "dev"
+description = "A command line utility for building fully self contained Python zipapps."
+name = "shiv"
+optional = false
+python-versions = ">=3.6"
+version = "0.1.1"
+
+[package.dependencies]
+click = ">=6.7,<7.0 || >7.0"
+pip = ">=9.0.3"
+setuptools = "*"
+
+[package.dependencies.importlib-resources]
+python = "<3.7"
+version = "*"
+
+[[package]]
+category = "main"
+description = "Python 2 and 3 compatibility utilities"
+marker = "sys_platform == \"linux\""
+name = "six"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "1.14.0"
+
+[[package]]
+category = "main"
+description = "Timeout control decorator and context managers, raise any exception in another thread"
+marker = "sys_platform == \"linux\""
+name = "stopit"
+optional = false
+python-versions = "*"
+version = "1.1.2"
+
+[[package]]
+category = "dev"
+description = "A built-package format for Python"
+name = "wheel"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "0.34.2"
+
+[package.extras]
+test = ["pytest (>=3.0.0)", "pytest-cov"]
+
 [metadata]
-content-hash = "98a08bd04639156a3eb2ed909fa9b458d720e8e16d988b979ed2742b47c89c86"
+content-hash = "b71cf09619d7e5e23fc281e74c6d9b5a15a347fca9a458d6f8919d2adcc3f5ce"
 python-versions = "^3.6"
 
 [metadata.files]
+click = [
+    {file = "click-6.7-py2.py3-none-any.whl", hash = "sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d"},
+    {file = "click-6.7.tar.gz", hash = "sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"},
+]
+evdev = [
+    {file = "evdev-1.3.0.tar.gz", hash = "sha256:b1c649b4fed7252711011da235782b2c260b32e004058d62473471e5cd30634d"},
+]
+importlib-resources = [
+    {file = "importlib_resources-1.0.2-py2.py3-none-any.whl", hash = "sha256:6e2783b2538bd5a14678284a3962b0660c715e5a0f10243fd5e00a4b5974f50b"},
+    {file = "importlib_resources-1.0.2.tar.gz", hash = "sha256:d3279fd0f6f847cced9f7acc19bd3e5df54d34f93a2e7bb5f238f81545787078"},
+]
+klembord = [
+    {file = "klembord-0.2.1-py3-none-any.whl", hash = "sha256:810eff42fae25a6f7a384df427268548099f7b263bac39af66117046d3c9f4d4"},
+    {file = "klembord-0.2.1.tar.gz", hash = "sha256:0785881aefa9c8ebcae548fbfea5be97ca554cf5f2876493e427a82ea9601de0"},
+]
+macpy = [
+    {file = "macpy-0.1.2-py3-none-any.whl", hash = "sha256:6e39dd2c2cfb98bd98db5f408b906c1e4c2cc9bd876b1c806d9bab4d3097fad9"},
+    {file = "macpy-0.1.2.tar.gz", hash = "sha256:02bc984a1a93e137cdea9cf9b2cbbb20d86909b364c58398a61d15d55f3739fb"},
+]
 pycountry = [
     {file = "pycountry-19.8.18.tar.gz", hash = "sha256:3c57aa40adcf293d59bebaffbe60d8c39976fba78d846a018dc0c2ec9c6cb3cb"},
+]
+python-libinput = [
+    {file = "python-libinput-0.1.0.tar.gz", hash = "sha256:e6b20e7fd889001fe74b01a1ff456e5f53c9ed01b016d6ceb65b6f573f129758"},
+]
+python-xlib = [
+    {file = "python-xlib-0.26.tar.bz2", hash = "sha256:b819c7e5f55830305919d78ea42b0cbd5e13687f5d12aa53556c33674b9876df"},
+    {file = "python_xlib-0.26-py2.py3-none-any.whl", hash = "sha256:244570b93cb82f5ceea3e4c861b4a0fffcea36947efa10fd63b7aa69d30047a8"},
+]
+shiv = [
+    {file = "shiv-0.1.1-py2.py3-none-any.whl", hash = "sha256:e39944e83a45e72e67e55303e3ba0d615f945820da5d59e166562a84a5c7a258"},
+    {file = "shiv-0.1.1.tar.gz", hash = "sha256:23eb1fc223ed7ca5419c22311d9073af053ef309eb4f89436c84c092133a5723"},
+]
+six = [
+    {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
+    {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+]
+stopit = [
+    {file = "stopit-1.1.2.tar.gz", hash = "sha256:f7f39c583fd92027bd9d06127b259aee7a5b7945c1f1fa56263811e1e766996d"},
+]
+wheel = [
+    {file = "wheel-0.34.2-py2.py3-none-any.whl", hash = "sha256:df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"},
+    {file = "wheel-0.34.2.tar.gz", hash = "sha256:8788e9155fe14f54164c1b9eb0a319d98ef02c160725587ad60f14ddc57b6f96"},
 ]

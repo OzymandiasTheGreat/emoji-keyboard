@@ -8,7 +8,7 @@ import * as PKG from "./package.json";
 
 const DEV = process.argv.includes("--dev");
 const SHELL = new PythonShell(
-	DEV ? "./main.py" : "emoji_keyboard.pyz",
+	app.isPackaged ? path.resolve(process.resourcesPath, "main.pyz") : "main.py",
 	{
 		mode: "json",
 		pythonOptions: [ "-u" ],
@@ -18,6 +18,11 @@ const SHELL = new PythonShell(
 let INDICATOR: Tray = null;
 let MAIN_WINDOW: BrowserWindow = null;
 let PANEL_THEME = "dark";
+
+
+function getAsset(assetPath: string): string {
+	return path.resolve(app.getAppPath(), app.isPackaged ? "dist/angular/assets" : "src/assets", assetPath);
+}
 
 
 function createIndicator(): Tray {
@@ -64,7 +69,7 @@ function createIndicator(): Tray {
 		{ id: "about", label: "About", click() { app.showAboutPanel(); } },
 		{ id: "quit", label: "Quit", role: "quit" },
 	]);
-	INDICATOR = new Tray(`./src/assets/icons/icon-${PANEL_THEME}-48.png`)  // TODO
+	INDICATOR = new Tray(getAsset(`icons/icon-${PANEL_THEME}-16.png`));
 	INDICATOR.setContextMenu(menu);
 	return INDICATOR;
 }
@@ -72,8 +77,6 @@ function createIndicator(): Tray {
 
 function createWindow(): BrowserWindow {
 
-	let res: Promise<void>;
-	// Create the browser MAIN_WINDOWdow.
 	MAIN_WINDOW = new BrowserWindow({
 		width: 490,
 		height: 330,
@@ -84,25 +87,25 @@ function createWindow(): BrowserWindow {
 		// alwaysOnTop: true,  // ALSO NOT IMPLEMENTED ON LINUX
 		fullscreenable: false,
 		title: PKG.name.split("-").map((w) => w.slice(0, 1).toUpperCase() + w.slice(1)).join(" "),
-		icon: "./src/assets/icons/icon-48.png",  // TODO
+		icon: getAsset("icons/icon-48.png"),
 		show: false,
 		frame: false,
 		// backgroundColor: "",  // TODO Theming
 		webPreferences: {
 			nodeIntegration: true,
-			preload: path.resolve(__dirname, "preload.js"),
+			preload: path.resolve(app.getAppPath(), "preload.js"),
 			allowRunningInsecureContent: (DEV) ? true : false,
 		},
 	});
 
 	if (DEV) {
-		require('electron-reload')(__dirname, {
-			electron: require(`${__dirname}/node_modules/electron`)
+		require('electron-reload')(app.getAppPath(), {
+			electron: require(`${app.getAppPath()}/node_modules/electron`)
 		});
 		MAIN_WINDOW.loadURL('http://localhost:4200');
 	} else {
 		MAIN_WINDOW.loadURL(url.format({
-			pathname: path.join(__dirname, "dist/index.html"),
+			pathname: getAsset("../index.html"),
 			protocol: 'file:',
 			slashes: true,
 		}));
@@ -130,7 +133,7 @@ app.setAboutPanelOptions({
 	credits: `${PKG.author.name} <${PKG.author.email}>`,
 	authors: [`${PKG.author.name} <${PKG.author.email}>`],
 	website: PKG.homepage,
-	iconPath: "./src/assets/icons/icon.svg",
+	iconPath: getAsset("icons/icon.svg"),
 });
 app.on("ready", () => {
 	createIndicator();
@@ -150,7 +153,7 @@ ipcMain.on("python", (event, msg) => {
 	SHELL.send(msg);
 });
 ipcMain.on("indicator", (event, theme) => {
-	INDICATOR.setImage(`./src/assets/icons/icon-${theme}-48.png`);
+	INDICATOR.setImage(`src/assets/icons/icon-${theme}-48.png`);
 });
 SHELL.on("message", (msg) => {
 	if (MAIN_WINDOW) {

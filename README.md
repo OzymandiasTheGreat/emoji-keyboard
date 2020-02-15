@@ -1,52 +1,52 @@
 # Emoji keyboard
 
-Virtual keyboard-like emoji picker for Linux.
+Virtual keyboard-like emoji palette for Linux.
 
-Emoji artwork and metadata provided by [Emoji Two](https://emojitwo.github.io/)
-by [Ranks.com](http://www.ranks.com/) and is licensed under
-[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+Emoji support on Linux is shaky at best. Modern distributions finally support
+displaying color emoji, but using emoji is inconsistent and inconvenient.
 
-Additional artwork provided by
-[Twitter Emoji](https://github.com/twitter/twemoji)
-([CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode)) and
-[Noto Emoji](https://github.com/googlei18n/noto-emoji)
-([Apache 2.0](https://github.com/googlei18n/noto-emoji/blob/master/LICENSE)).
+Enter `emoji-keyboard`! Press a hotkey (default `Ctrl+Super+Space`) or choose `Palette`
+from app indicator and an emoji palette opens. Then just click on emoji you want to use
+and watch them appear in the active application!
+
+> **Tip:** hold shift when using the terminal and you can type emoji into the terminal
+
+> **Tip:** you can choose to copy emoji into the clipboard instead in the `Preferences`
+
+Easy.
+
+Not sure which emoji to use? Press `Ctrl+Super+F` or choose `Search` from app indicator
+and you can search emoji by name, short code or emoticon.
+
+> **Tip:** don't want to use mouse after searching? Press up/down arrows and `Enter` to type
+
+Got emoji you use frequently? Memorize short code (you can see it when hovering emoji
+in the palette) and then just type it and watch it be replaced by the emoji.
+
+> **Tip:** you can disable this feature in `Preferences`. It doesn't play well with Firefox
+
+And of course there's eye-candy. Choose emoji set you prefer or app and panel themes to match your system.
+
+## Credits and License
+
+`emoji-keyboard` is release under GPLv3 or later license.
+
+&copy; 2020 [Ozymandias (Tomas Ravinskas)](mailto:tomas.rav@gmail.com)
+
+Emoji artwork and metadata provided by:
+
+[Blobmoji](https://github.com/c1710/blobmoji) by Google Inc. and is licensed under [Apache-2.0](https://github.com/C1710/blobmoji/blob/master/LICENSE)
+
+[Emoji Two](https://emojitwo.github.io/) by [Ranks.com](http://www.ranks.com/) and is licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+[Noto emoji](https://github.com/googlefonts/noto-emoji) by Google Inc. and is licensed under [Apache-2.0](https://github.com/googlefonts/noto-emoji/blob/master/LICENSE)
+
+[Twemoji](https://github.com/twitter/twemoji) by [Twitter](https://twemoji.twitter.com/) and is licensed under [CC-BY-4.0](https://github.com/twitter/twemoji/blob/master/LICENSE-GRAPHICS)
+
+[Openmoji](https://github.com/hfg-gmuend/openmoji) by [openmoji.org](https://openmoji.org/about/#team) and is licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Installation
 
-You can install emoji keyboard from [pypi](https://pypi.org/project/emoji-keyboard).
+Grab AppImage from [releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases) and just run it!
 
-First you need pip and pygobject bindings, on Debian based distros you can get them with:
-
-```sudo apt install python3-pip python3-gi gir1.2-gtk-3.0 gir1.2-glib-2.0```
-
-Next run this command (on other distros it may just be `pip` depending on how you installed pip):
-
-```pip3 install --user https://github.com/OzymandiasTheGreat/emoji-keyboard/archive/master.zip```
-
-Now start the indicator by running `emoji-keyboard` and start typing those emoji!
-
-## Usage
-
-### Keyboard
-
-Selecting `Show Keyboard` from the app indicator menu or, if your desktop
-environment supports it, middle-clicking app indicator will toggle the visibility
-of the keyboard. When the picker is visible simply clicking on emoji will type it
-into focused application.
-
-### Search
-
-You can search by official unicode name or by :shortname:.
-Pressing `enter` will select and type the first result.
-
-### Hotkeys
-
-`emoji-keyboard` can be controlled from the command line. Use your desktop's
-native hotkey utility to assign hotkeys to
-
-`emoji-keyboard -k` to toggle visibility of the keyboard,
-
-`emoji-keyboard -s` to toggle visibility of the search window.
-
-Run `emoji-keyboard -h` in the terminal to get full list of commands.
+## Feedback is always WELCOME
