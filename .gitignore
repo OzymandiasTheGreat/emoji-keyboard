@@ -8,10 +8,12 @@
 /out-tsc
 /app-builds
 /release
+__pycache__
 main.js
 src/**/*.js
 !src/karma.conf.js
 *.js.map
+*.pyc
 
 # dependencies
 /node_modules

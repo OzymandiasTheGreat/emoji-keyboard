@@ -42,7 +42,7 @@
 	<mat-form-field>
 		<mat-select #skinTone color="accent" [value]="prefs.settings.skin_tone">
 			<mat-option *ngFor="let tone of skinTones" [value]="tone">
-				<img [src]="tonePath + tone + '.svg' | safeRes" alt="None">
+				<img [src]="join(tonePath, tone) | safeRes" alt="None">
 			</mat-option>
 		</mat-select>
 	</mat-form-field>

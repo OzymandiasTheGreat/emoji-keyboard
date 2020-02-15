@@ -13,7 +13,7 @@ install_requires = [
 
 setup(
 	name = 'emoji-keyboard',
-	version = '3.0.0rc0',
+	version = '3.0.0rc1',
 	description = 'Type emoji easily! Virtual keyboard-like emoji palette with lots of features.',
 	long_description = None,
 	author = 'Ozymandias (Tomas Ravinskas)',

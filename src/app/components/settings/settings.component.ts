@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import { Component, OnInit, AfterViewInit, Inject, ViewChild, ElementRef } from '@angular/core';
 
 import { MatSelect } from "@angular/material/select";
@@ -69,5 +71,9 @@ export class SettingsComponent implements OnInit, AfterViewInit {
 		Object.assign(this.prefs.settings, preferences);
 		Object.assign(this.prefs.hotkeys, hotkeys);
 		this.prefs.save();
+	}
+
+	join(root: string, file: string): string {
+		return path.join(root, `${file}.svg`);
 	}
 }
