@@ -33,6 +33,8 @@ And of course there's eye-candy. Choose emoji set you prefer or app and panel th
 
 &copy; 2020 [Ozymandias (Tomas Ravinskas)](mailto:tomas.rav@gmail.com)
 
+Based on the Angular-Electron template by [Maxime Gris](https://github.com/maximegris/angular-electron).
+
 Emoji artwork and metadata provided by:
 
 [Blobmoji](https://github.com/c1710/blobmoji) by Google Inc. and is licensed under [Apache-2.0](https://github.com/C1710/blobmoji/blob/master/LICENSE)
