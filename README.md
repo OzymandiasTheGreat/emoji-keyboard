@@ -49,4 +49,4 @@ Emoji artwork and metadata provided by:
 
 Grab AppImage from [releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases) and just run it!
 
-## Feedback is always WELCOME
+***Feedback is always WELCOME***
