@@ -1,5 +1,3 @@
 __pycache__
-install_log
-scratchpad.py
-*_old*
-.sync.ffs_db
+*.pyc
+.venv
