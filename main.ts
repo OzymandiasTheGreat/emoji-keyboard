@@ -75,15 +75,6 @@ function createIndicator(): Tray {
 }
 
 
-<<<<<<< HEAD
-	// Create the browser window.
-	win = new BrowserWindow({
-		x: 0,
-		y: 0,
-		width: 800,
-		height: 600,
-		frame: false
-=======
 function createWindow(): BrowserWindow {
 
 	MAIN_WINDOW = new BrowserWindow({
@@ -105,7 +96,6 @@ function createWindow(): BrowserWindow {
 			preload: path.resolve(app.getAppPath(), "preload.js"),
 			allowRunningInsecureContent: (DEV) ? true : false,
 		},
->>>>>>> -
 	});
 
 	if (DEV) {
@@ -121,13 +111,9 @@ function createWindow(): BrowserWindow {
 		}));
 	}
 
-<<<<<<< HEAD
-	win.webContents.openDevTools();
-=======
 	if (DEV) {
 		MAIN_WINDOW.webContents.openDevTools();
 	}
->>>>>>> -
 
 	MAIN_WINDOW.on("ready-to-show", () => {
 		// MAIN_WINDOW.show();

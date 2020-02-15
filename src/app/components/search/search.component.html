@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 <div class="search-bar" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
 	<input #search type="text" class="search-input" autofocus>
 </div>
 <div class="search-results">
 	<app-palette [items]="results"></app-palette>
+=======
+<div class="search-bar mat-elevation-z3" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
+	<mat-form-field appearance="standard" color="accent" backgroundColor="primary">
+		<input matInput #search placeholder="Search..." autofocus>
+	</mat-form-field>
+</div>
+<div class="search-results">
+	<app-palette [query]="query"></app-palette>
+>>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
 </div>

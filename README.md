@@ -41,23 +41,11 @@ Emoji artwork and metadata provided by:
 
 [Noto emoji](https://github.com/googlefonts/noto-emoji) by Google Inc. and is licensed under [Apache-2.0](https://github.com/googlefonts/noto-emoji/blob/master/LICENSE)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
-Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
-=======
-`emoji-keyboard` can be controlled from the command line. Use your desktop's
-native hotkey utility to assign hotkeys to
-
-`emoji-keyboard -k` to toggle visibility of the keyboard,
->>>>>>> -
-=======
 [Twemoji](https://github.com/twitter/twemoji) by [Twitter](https://twemoji.twitter.com/) and is licensed under [CC-BY-4.0](https://github.com/twitter/twemoji/blob/master/LICENSE-GRAPHICS)
 
 [Openmoji](https://github.com/hfg-gmuend/openmoji) by [openmoji.org](https://openmoji.org/about/#team) and is licensed under [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Installation
->>>>>>> - Prepared configs for packaging
 
 Grab AppImage from [releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases) and just run it!
 

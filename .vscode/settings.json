@@ -1,0 +1,5 @@
+{
+	"python.pythonPath": ".venv/bin/python3",
+	"git.ignoreLimitWarning": true,
+	"typescript.tsdk": "node_modules/typescript/lib"
+}

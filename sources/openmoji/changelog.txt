@@ -1,0 +1,153 @@
++ new
+* changed
+- removed
+
+--------------------------------------------------------------------------------
+
+👉 OpenMoji 12.2 - XX XXX 2020
+
+New:
++ Transgender Flag
++ Horse Riding
++ Gender neutral persons and person-roles to fulfill Unicode Emoji 12.1:
+  1F9D1-200D-1F9B0, 1F9D1-200D-1F9B1, 1F9D1-200D-1F9B3, 1F9D1-200D-1F9B2,
+  1F9D1-200D-2695-FE0F, 1F9D1-200D-1F393, 1F9D1-200D-1F3EB, 1F9D1-200D-2696-FE0F,
+  1F9D1-200D-1F33E, 1F9D1-200D-1F373, 1F9D1-200D-1F527, 1F9D1-200D-1F3ED,
+  1F9D1-200D-1F4BC, 1F9D1-200D-1F52C, 1F9D1-200D-1F4BB, 1F9D1-200D-1F3A4,
+  1F9D1-200D-1F3A8, 1F9D1-200D-2708-FE0F, 1F9D1-200D-1F680, 1F9D1-200D-1F692,
+  1F9D1-200D-1F9AF, 1F9D1-200D-1F9BC, 1F9D1-200D-1F9BD
+
+Fix:
+  * finger height in Person Raising Hand
+  * black and white Pomegranate
+  * add leaf and stem in Poppy
+  * racing position in Horse Racing
+  * colours in Mate
+  * colour in Black Heart
+  * remove shadow from hearts in Kiss, Smiling Face with Hearts and Couple with Heart
+  * connect lines and colours in Authority Instruction
+  * remove eyebrows and change mouth in Confused Face and Confounded Face
+
+* Changed rocket ship 1F680 from American space shuttle to the iconic vision of a
+  rocket ship styled imagined in SF of the 1960's, by Kris Kowal @kriskowal
+
+* Improved formatting of all SVG files with automated attributes sorting/cleaning
+
+--------------------------------------------------------------------------------
+👉 OpenMoji 12.1 - 23 December 2019
+
+Happy Holidays release! Many improvements, fixes and a few new OpenMojis!
+Special thanks to Carlin Mackenzie @carlinmack for his great and plenty contributions!
+
++ Added Poppy (War Remembrance Day) by @carlinmack
+  suggested by @inferno986return
++ Added Youtube and Github logo, contributed by Romain Bazile @gromain
++ Added pomegranate, poppy, exhausted, incredulous face to extra emojis @carlinmack
+
+* Improved "red hair" color of 1F9B0, 1F468-200D-1F9B0, 1F469-200D-1F9B0
+  to better distinct from other hair colors.
+* Fix OpenMojis with blond, red or white hair by @sourgift
+* Fix 1F471 'person: blond hair' to resemble '1F9D1 person' by @sourgift
+* Fix 1F1F2-1F1F7 flag Mauritania added red stripes by @jonpdixon
+* Fix 1F1F5-1F1FC flag Palau, increased size of yellow circle by @jonpdixon
+* Removed shadows from spade, heart, diamond and club suit (2660, 2663, 2665, 2666)
+* Removed shadows from all hearts in smileys-emotion/emotion/ (2764, 2763, 1F499,
+  1F498, 1F497, 1F496, 1F495, 1F494, 1F493, 1F90E, 1F90D, 1F49F, 1F49E, 1F49D, 1F49C,
+  1F49B, 1F49A, 1F48C, 1F9E1, 1F5A4)
+* Redesign pleading, flushed, tired and weary, dumpling emoji, face screaming with fear,
+  foot emoji by Carlin MacKenzie @carlinmack
+* Fix smirking, frowning with open mouth and unamused face, melon colours,
+  right speech bubble, thought balloon and speech ballon Seychelles flag,
+  bikini, banana by Carlin MacKenzie @carlinmack
+* Fix face and expression of 1F62C grimacing face
+* Improved wings of 1F47C baby angel
+* Fix 1F237 Japanese "monthly amount" added missing horizontal stroke
+* Improved 1F004 to better resemble a Mahjong Red Dragon tile by @sourgift
+  Change tile from square to rectangle
+* Fix 1F31A 1F31D moon emojis by Carlin Mackenzie @carlinmack
+  Same smile and face for both moon emojis
+  Change colour of full moon shadow
+* Fix 1F1E9-1F1F2 Dominica flag by @pyfisch
+* Fix 1F1FB-1F1EA by Jonathan Dixon @jonpdixon
+  Correct colour order and number of stars on Venezuelan flag
+* Fix 1F3F4-E0067-E0062-E0073-E0063-E0074-E007F by Carlin Mackenzie @carlinmack
+  Correct diagonal line on Scottish flag
+* Fix 1F473-200D-2640-FE0F Women wearing turban should not show hair #20
+  Thanks Gurmukh Panesar @gurmukhp
+* Fix 1F3F3-FE0F-200D-1F308 Rainbow flag now shows the right colors and
+  display as a country flag. By Romain Bazile @gromain, suggestion by
+  Pascal Eckmann @p4cx.
+* Small fixes for 1F4A9, 1F9B0, 1F9B1, 1F9B2, 1F9B3, 1F9B8, 1F9B9,
+  1F9CF-200D-2642-FE0F, 1F9D6, 1F9D9, 1F9DA, 1F9DB, 1F62C, 1F473-200D-2642-FE0F,
+  1F473, 1F534, 1F535, 1F601, 1F624, 26AA, 26AB.
+  Thanks Rifat Can Erdogan & Selina Lange
+
+--------------------------------------------------------------------------------
+
+👉 OpenMoji 12.0 - 15 May 2019
+
+Full support for all emojis of Unicode 12.0/Emoji 12.0 and 3030 new emojis,
+skin tones support, refactoring all source files from .ai to .svg, better
+quality assurance with ca. 17000+ automated unit test ...
+
++ Added 377 new emojis.
+  Contributions of the OpenMoji course at the HfG Schwäbisch Gmünd by
+  Benedikt Groß and Daniel Utz with Antonia Wagner, Evelyn Soos, Fanny Jung,
+  Florian Nagel, Jonas Dunkel, Laura Dworatschek, Laura Schießer, Nadine Bartel,
+  Ricarda Krejci, Rifat Erdogan, Sam Eckert, Selina Lange, Tonia Reinhardt
+  and Yasmin Abdullahi.
+
++ Added basic support for multiple skintone modifiers
+  e.g. 1F9D1-1F3FF-200D-1F91D-200D-1F9D1-1F3FB
+
++ Added 25A1 "missing glyph"
+
++ Added 261 flags from Andorra to Zimbabwe
+
++ Added 47 "emergency" related emojis contributed by the Guemil Project
+
++ Added 136 new emojis.
+  Contributions of the OpenMoji Workshop at the HfG Laborwoche 2018 by
+  Abby Esquivel, Aileen Gedrat, Anne Frauendorf, Daniel Quiros, Hend Hourani,
+  Lois Proksch, Louisa Mantsch, Marleen Heine, Nadja Grün, Sarah Mager,
+  Sina Chlod, Vincent Seitz
+
++ Added ca. 17000+ unit tests to ensure automated quality assurance
+
+
+* Refactored source files to follow Emoji v12 categories
+
+* Normalised "beautified" all svg source and production files
+
+* Updated 13 standard emojis with Guemil Project revisions
+
+* Fixed flags 1F3C1, 1F3F3, 1F3F3-FE0F-200D-1F308, 1F3F4 to ensure consistency
+
+* Converted source files from .ai to .svg
+
+* Refactored source files to follow new mandatory layer structure
+
+* Analysed, fixed and simplified all shape types for every emoji (e.g. removed mask shapes)
+
+* Fixed every emoji to follow the OpenMoji color palette
+
+* Added property contribution date (hfg_date) to the openmoji json/csv "data" files
+
+* Fixed hour glasses to obey the laws of gravity
+
+
+- Ditched .ai source files in favour of .svg! Yay!
+
+
+--------------------------------------------------------------------------------
+
+👉 OpenMoji 1.0 - 18 April 2018
+
+Initial public release
+
+
+--------------------------------------------------------------------------------
+
+👋 OpenMoji pre - Feb 15 2018
+
+Pre-release for the HfG Exhibition Semester WS17/18

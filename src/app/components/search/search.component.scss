@@ -1,4 +1,5 @@
 .search-bar {
+<<<<<<< HEAD
 	position: fixed;
 	width: 100vw;
 	background-color: #333333;
@@ -8,5 +9,21 @@
 		font-size: 1.5rem;
 		color: #FFFFFFF2;
 		margin: 10px 0;
+=======
+	background-color: var(--primary);
+	color: var(--accent-lighter);
+	position: fixed;
+	width: 100vw;
+	padding: 0 45px;
+	box-sizing: border-box;
+	z-index: 998;
+	mat-form-field.mat-form-field {
+		height: 56px;
+		font-size: 16px;
+		min-width: 100%;
+		:host ::ng-deep & .mat-form-field-infix {
+			padding: 0;
+		}
+>>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
 	}
 }

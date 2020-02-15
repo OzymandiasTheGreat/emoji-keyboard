@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="layers" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+<rect x="70" y="60" fill="#92D3F5" width="46" height="16"/>
+<rect x="70" y="250" fill="#1E50A0" width="46" height="16"/>
+<rect x="120" y="60" fill="#EA5A47" width="46" height="16"/>
+<rect x="170" y="60" fill="#B1CC33" width="46" height="16"/>
+<rect x="220" y="60" fill="#FCEA2B" width="46" height="16"/>
+<rect x="270" y="80" fill="#D0CFCE" width="46" height="16"/>
+<rect x="70" y="80" fill="#61B2E4" width="46" height="16"/>
+<rect x="120" y="80" fill="#D22F27" width="46" height="16"/>
+<rect x="120" y="250" fill="#781E32" width="46" height="16"/>
+<rect x="170" y="80" fill="#5C9E31" width="46" height="16"/>
+<rect x="170" y="250" fill="#186648" width="46" height="16"/>
+<rect x="220" y="80" fill="#F1B31C" width="46" height="16"/>
+<rect x="270" y="100" fill="#9B9B9A" width="46" height="16"/>
+<rect x="270" y="60" fill="#FFFFFF" stroke="#D0CFCE" stroke-width="0.25" stroke-miterlimit="10" width="46" height="16"/>
+<rect x="270" y="140" width="46" height="16"/>
+<rect x="270" y="120" fill="#3F3F3F" width="46" height="16"/>
+<rect x="70" y="200" fill="#E67A94" width="46" height="16"/>
+<rect x="120" y="180" fill="#B399C8" width="46" height="16"/>
+<rect x="120" y="200" fill="#8967AA" width="46" height="16"/>
+<rect x="170" y="180" fill="#F4AA41" width="46" height="16"/>
+<rect x="170" y="200" fill="#E27022" width="46" height="16"/>
+<rect x="220" y="180" fill="#A57939" width="46" height="16"/>
+<rect x="220" y="200" fill="#6A462F" width="46" height="16"/>
+<rect x="70" y="180" fill="#FFA7C0" width="46" height="16"/>
+<text transform="matrix(1 0 0 1 20.0078 64.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">primary </text>
+<text transform="matrix(1 0 0 1 20.0078 70.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">colors</text>
+<text transform="matrix(1 0 0 1 20.0078 24.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">openmoji</text>
+<text transform="matrix(1 0 0 1 20.0078 30.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">colors</text>
+<text transform="matrix(1 0 0 1 20.0078 184.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">secondary </text>
+<text transform="matrix(1 0 0 1 20.0078 190.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">colors</text>
+<text transform="matrix(1 0 0 1 20.0078 254.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">flags:</text>
+<text transform="matrix(1 0 0 1 20.0078 260.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">additional </text>
+<text transform="matrix(1 0 0 1 20.0078 266.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">colors</text>
+<rect x="70" y="300" fill="#FADCBC" width="46" height="16"/>
+<rect x="120" y="300" fill="#DEBB90" width="46" height="16"/>
+<rect x="170" y="300" fill="#C19A65" width="46" height="16"/>
+<rect x="220" y="300" fill="#A57939" width="46" height="16"/>
+<rect x="270" y="300" fill="#6A462F" width="46" height="16"/>
+<rect x="320" y="300" fill="#352318" width="46" height="16"/>
+<text transform="matrix(1 0 0 1 20.0078 304.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">skin tones:</text>
+<text transform="matrix(1 0 0 1 20.0078 310.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">will be generated,</text>
+<text transform="matrix(1 0 0 1 20.0078 316.291)" fill="#1D1D1B" font-family="'ArialMT'" font-size="5px">please don’t use</text>
+</svg>

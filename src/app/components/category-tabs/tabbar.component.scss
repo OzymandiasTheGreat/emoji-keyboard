@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $roboto-font-path: "~roboto-fontface/fonts/roboto/";
 @import "~materialize-css/sass/materialize.scss";
 
@@ -26,4 +27,30 @@ $roboto-font-path: "~roboto-fontface/fonts/roboto/";
 	margin: 0;
 	padding: 0 5px 0 0;
 	filter: invert(0.95);
+=======
+nav {
+	position: fixed;
+	min-width: 100vw;
+	z-index: 997;
+}
+
+a.mat-tab-link {
+	min-width: 0;
+	padding: 0 6px;
+	line-height: 2;
+	vertical-align: middle;
+	&:hover {
+		background-color: var(--highlight);
+	}
+}
+
+:host ::ng-deep .mat-icon {
+	margin-right: 3px;
+	svg {
+		height: 16px;
+		path, polygon {
+			fill: inherit !important;
+		}
+	}
+>>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
 }

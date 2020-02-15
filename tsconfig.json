@@ -1,10 +1,20 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+<<<<<<< HEAD
     "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+=======
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+>>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
@@ -21,6 +31,7 @@
       "DOM.Iterable"
     ]
   },
+<<<<<<< HEAD
   "include": [
     "main.ts",
     "src/**/*"
@@ -28,4 +39,10 @@
   "exclude": [
     "node_modules"
   ]
+=======
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+>>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
 }

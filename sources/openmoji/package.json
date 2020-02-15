@@ -1,0 +1,51 @@
+{
+  "name": "openmoji",
+  "version": "12.1.0",
+  "description": "Open source emojis for designers, developers and everyone else!",
+  "homepage": "https://openmoji.org/",
+  "keywords": [
+    "openmoji",
+    "OpenMoji",
+    "emoji",
+    "emojis",
+    "emoticons",
+    "smileys",
+    "smilies",
+    "unicode",
+    "icon",
+    "pictogram",
+    "colorfont"
+  ],
+  "scripts": {
+    "test": "node_modules/.bin/mocha --reporter mochawesome --reporter-options reportDir=test/report,reportFilename=report,json=false,code=false,cdn=true,reportTitle=OpenMoji-Tester,reportPageTitle=OpenMoji-Tester test/*.js --openmoji-data-json $PWD/data/openmoji.json --openmoji-src-folder $PWD/src",
+    "test-dev": "node_modules/.bin/mocha --invert --grep \"production\" test/*.js --openmoji-data-json $PWD/data/openmoji.json --openmoji-src-folder $PWD/src",
+    "pretty-src-svg": "find src/people-body/family/ -type f -name '*.svg' -print0 | xargs -0 -n 1 -P 6 svgo --quiet --config helpers/beautify-svg.yml",
+    "export-svg": "./helpers/export-svg.sh",
+    "export-png": "./helpers/export-png.sh",
+    "export-svg-font": "node helpers/export-svg-font.js",
+    "export-zip": "./helpers/export-zip.sh",
+    "generate": "./helpers/generate.sh"
+  },
+  "engines": {
+    "node": ">=8.15.0"
+  },
+  "repository": "https://github.com/hfg-gmuend/openmoji",
+  "license": "CC-BY-SA-4.0",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "characterset": "^1.3.0",
+    "chroma-js": "^1.4.0",
+    "csv-parse": "^2.5.0",
+    "csv-write-stream": "^2.0.0",
+    "emojibase-data": "^4.2.0",
+    "glob": "^7.1.2",
+    "jsdom": "^13.2.0",
+    "kd-tree-javascript": "^1.0.3",
+    "libxmljs": "^0.19.7",
+    "lodash": "^4.17.4",
+    "mocha": "^5.2.0",
+    "mochawesome": "^3.1.1",
+    "optimist": "^0.6.1",
+    "svgo": "^1.3.2"
+  }
+}
