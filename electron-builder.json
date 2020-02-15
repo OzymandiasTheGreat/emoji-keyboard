@@ -32,18 +32,6 @@
       "!karma.conf.js",
       "!.vscode"
   ],
-  "win": {
-    "icon": "dist",
-    "target": [
-      "portable"
-    ]
-  },
-  "mac": {
-    "icon": "dist",
-    "target": [
-      "dmg"
-    ]
-  },
   "linux": {
     "icon": "dist/resources/icon",
     "category": "Utility",

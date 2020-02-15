@@ -1,7 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
+/dist/release
+/dist/angular
 /tmp
 /out-tsc
 /app-builds
@@ -14,6 +15,7 @@ src/**/*.js
 # dependencies
 /node_modules
 /.venv
+/*.egg-info
 
 # IDEs and editors
 /.idea
