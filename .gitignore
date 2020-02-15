@@ -3,6 +3,7 @@
 # compiled output
 /dist/release
 /dist/angular
+/dist/**/*.pyz
 /tmp
 /out-tsc
 /app-builds

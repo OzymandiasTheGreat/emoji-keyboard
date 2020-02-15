@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-<mz-tab
-	[fixedTabWidth]="'true'"
-	[swipeable]="'true'"
-	>
-	<mz-tab-item
-		*ngFor="let category of categories"
-		[label]="category.name"
-		[tabItemId]="category.name"
-		[class]="category.icon"
-		[active]="('/' + category.name) === router.url"
-		cdkTrapFocus
-		[cdkTrapFocusAutoCapture]="true"
-	>
-		<app-palette [items]="items[category.name]"></app-palette>
-	</mz-tab-item>
-</mz-tab>
-=======
 <nav mat-tab-nav-bar mat-stretch-tabs class="mat-elevation-z3" color="accent" backgroundColor="primary" tabindex="0">
 	<a mat-tab-link
 		*ngFor="let category of categories"
@@ -28,4 +10,3 @@
 	</a>
 </nav>
 <router-outlet name="category"></router-outlet>
->>>>>>> c8da92906c2b44849a6c4b3c83ce1e6715699a77
