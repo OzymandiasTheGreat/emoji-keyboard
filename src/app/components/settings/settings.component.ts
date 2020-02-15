@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, Inject, ViewChild, ElementRef } from 
 import { MatSelect } from "@angular/material/select";
 import { MatSlideToggle } from "@angular/material/slide-toggle";
 
-import { SettingsService } from "../../services";
+import { DirectoryService, SettingsService } from "../../services";
 
 
 @Component({
@@ -12,6 +12,7 @@ import { SettingsService } from "../../services";
 	styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, AfterViewInit {
+	public tonePath: string;
 	public actions: string[] = ["type", "copy"];
 	public emojiThemes: string[] = ["emojitwo", "twemoji", "noto-emoji", "blobmoji", "openmoji"];
 	public skinTones: (string | null)[] = [null, "1F3FB", "1F3FC", "1F3FD", "1F3FE", "1F3FF"];
@@ -28,7 +29,12 @@ export class SettingsComponent implements OnInit, AfterViewInit {
 	@ViewChild("paletteHotkey") paletteHotkey: ElementRef<HTMLInputElement>;
 	@ViewChild("searchHotkey") searchHotkey: ElementRef<HTMLInputElement>;
 
-	constructor(@Inject(SettingsService) public prefs: SettingsService) { }
+	constructor(
+		@Inject(DirectoryService) private dir: DirectoryService,
+		@Inject(SettingsService) public prefs: SettingsService,
+	) {
+		this.tonePath = this.dir.getAsset("emoji/blobmoji/");
+	}
 
 	ngOnInit(): void { }
 

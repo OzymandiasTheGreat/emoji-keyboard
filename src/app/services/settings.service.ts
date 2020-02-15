@@ -10,9 +10,6 @@ import { Observable as ObjectObservable } from "object-observer/dist/node/object
 import { DirectoryService } from './directory.service';
 
 
-const DEFAULT = "src/assets/data/default.ini";
-
-
 export interface ISettings {
 	PREFERENCES: {
 		action: "type" | "copy";
@@ -43,9 +40,11 @@ export interface IChanges {
 	providedIn: "root",
 })
 export class SettingsService {
+	private DEFAULT: string;
 	private USER: string;
 	private SETTINGS: ISettings | any;
 	constructor(@Inject(DirectoryService) private dir: DirectoryService) {
+		this.DEFAULT = this.dir.getAsset("data/default.ini", true);
 		this.USER = path.join(dir.config, "settings.ini");
 		const [ _default, user ] = this.load();
 		this.SETTINGS = ObjectObservable.from({...ini.parse(_default), ...ini.parse(user)});
@@ -62,7 +61,7 @@ export class SettingsService {
 	}
 
 	private load() {
-		const _default = fs.readFileSync(DEFAULT, "utf8");
+		const _default = fs.readFileSync(this.DEFAULT, "utf8");
 		let user;
 		try {
 			user = fs.readFileSync(this.USER, "utf8");

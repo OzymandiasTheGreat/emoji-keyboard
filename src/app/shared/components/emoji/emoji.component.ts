@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject } from "@angular/core";
 import { Highlightable } from "@angular/cdk/a11y";
 
-import { SettingsService, ISettings, IEmoji, RecentService, MessengerService, ElectronService } from "../../../services";
+import { DirectoryService, SettingsService, ISettings, IEmoji, RecentService, MessengerService, ElectronService } from "../../../services";
 
 
 @Component({
@@ -17,6 +17,7 @@ export class EmojiComponent implements OnInit, Highlightable {
 	public active = false;
 
 	constructor(
+		@Inject(DirectoryService) private dir: DirectoryService,
 		@Inject(SettingsService) private prefs: SettingsService,
 		@Inject(RecentService) private recent: RecentService,
 		@Inject(MessengerService) private messenger: MessengerService,
@@ -51,7 +52,7 @@ export class EmojiComponent implements OnInit, Highlightable {
 	}
 
 	getResource(): string {
-		return `../../../../assets/emoji/${this.theme}/${this.emoji.skinTones[this.skinTone].imagePath}`;
+		return this.dir.getAsset(`emoji/${this.theme}/${this.emoji.skinTones[this.skinTone].imagePath}`);
 	}
 
 	click() {

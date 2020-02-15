@@ -3,9 +3,11 @@ import * as path from "path";
 import { ipcRenderer, IpcRenderer } from "electron"
 import { Injectable, Inject } from "@angular/core";
 
+import { DirectoryService } from "./directory.service";
 import { IEmoji } from "./data.service";
 import { RecentService } from './recent.service';
 import { SettingsService } from './settings.service';
+import { Dir } from '@angular/cdk/bidi';
 
 
 @Injectable({
@@ -14,6 +16,7 @@ import { SettingsService } from './settings.service';
 export class MessengerService {
 	private ipc = ipcRenderer;
 	constructor(
+		@Inject(DirectoryService) private dir: DirectoryService,
 		@Inject(RecentService) private recent: RecentService,
 		@Inject(SettingsService) private prefs: SettingsService,
 	) {
@@ -26,7 +29,7 @@ export class MessengerService {
 						this.ipc.send("python", { action: "skin_tone", payload: change.value });
 					} else if (change.path.includes("type_expand")) {
 						if (change.value) {
-							this.ipc.send("python", { action: "load", payload: path.resolve("./src/assets/data/emoji.json") });
+							this.ipc.send("python", { action: "load", payload: this.dir.getAsset("data/emoji.json", true) });
 						} else {
 							this.ipc.send("python", { action: "unload", payload: null });
 						}
@@ -50,7 +53,7 @@ export class MessengerService {
 	}
 
 	loadEmoji(): void {
-		this.ipc.send("python", { action: "load", payload: path.resolve("./src/assets/data/emoji.json") });
+		this.ipc.send("python", { action: "load", payload: this.dir.getAsset("data/emoji.json", true) });
 	}
 
 	unloadEmoji(): void {
