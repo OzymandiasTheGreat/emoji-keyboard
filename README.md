@@ -2,6 +2,12 @@
 
 Virtual keyboard-like emoji palette for Linux.
 
+-------------------
+
+If you find this software useful, [consider becoming a patron](https://www.patreon.com/ozymandias)
+
+-------------------
+
 Emoji support on Linux is shaky at best. Modern distributions finally support
 displaying color emoji, but using emoji is inconsistent and inconvenient.
 
