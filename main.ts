@@ -1,8 +1,10 @@
 import * as path from "path";
 import * as url from "url";
+import * as fs from "fs";
 
 import { app, Tray, BrowserWindow, Menu, dialog, ipcMain } from "electron";
 import { PythonShell } from "python-shell";
+import * as XDG from "xdg-portable";
 
 import * as PKG from "./package.json";
 
@@ -15,6 +17,7 @@ const SHELL = new PythonShell(
 		stderrParser: (line) => JSON.stringify(line),
 	},
 );
+const PYTHONLOG = fs.createWriteStream(path.join(path.resolve(XDG.config(), PKG.name), "python.log"), { flags: "a" });
 let INDICATOR: Tray = null;
 let MAIN_WINDOW: BrowserWindow = null;
 let PANEL_THEME = "dark";
@@ -147,13 +150,14 @@ app.on("before-quit", () => {
 			console.error(`PYTHON THREW ERRORS ${err} CODE ${code} SIGNAL ${signal}`);
 		}
 	}).terminate();
+	PYTHONLOG.end();
 });
 ipcMain.handle("main_window", (event) => MAIN_WINDOW.id);
 ipcMain.on("python", (event, msg) => {
 	SHELL.send(msg);
 });
 ipcMain.on("indicator", (event, theme) => {
-	INDICATOR.setImage(`src/assets/icons/icon-${theme}-48.png`);
+	INDICATOR.setImage(getAsset(`icons/icon-${theme}-48.png`));
 });
 SHELL.on("message", (msg) => {
 	if (MAIN_WINDOW) {
@@ -167,11 +171,14 @@ SHELL.on("message", (msg) => {
 });
 SHELL.on("stderr", (err) => {
 	if (err.error && err.msg && err.traceback) {
-		dialog.showErrorBox(err.error, `${err.msg}\n\n${err.traceback}`);
+		PYTHONLOG.write(`${new Date().toISOString()} - ${err.error}::${err.msg}\n${err.traceback}\n`);
+		// dialog.showErrorBox(err.error, `${err.msg}\n\n${err.traceback}`);
 	} else {
-		dialog.showErrorBox("Uncaught exception!!!", err);
+		PYTHONLOG.write(`${new Date().toISOString()} - ${err}\n`);
+		// dialog.showErrorBox("Uncaught exception!!!", err);
 	}
 });
 SHELL.on("error", (err) => {
-	dialog.showErrorBox("Python crashed -- Please restart", err);
+	PYTHONLOG.write(`${new Date().toISOString()} - ${err}\n\n`);
+	dialog.showErrorBox("Python crashed - Please restart", err);
 });
