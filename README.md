@@ -6,6 +6,8 @@ Virtual keyboard-like emoji palette for Linux.
 
 If you find this software useful, [consider becoming a patron](https://www.patreon.com/ozymandias)
 
+If you wish to make one-time donation, become a patron (you'll be charged) and immediately cancel your subscription.
+
 -------------------
 
 Emoji support on Linux is shaky at best. Modern distributions finally support
@@ -32,6 +34,22 @@ in the palette) and then just type it and watch it be replaced by the emoji.
 > **Tip:** you can disable this feature in `Preferences`. It doesn't play well with Firefox
 
 And of course there's eye-candy. Choose emoji set you prefer or app and panel themes to match your system.
+
+## emoji-keyboard won't start!
+
+First try running it in the terminal.
+
+You'll probably see something about `sandbox helper` and `permissions`. That's a known [electron bug](https://github.com/electron/electron/issues/17972).
+
+To work around it simply append `--no-sandbox` flag when starting emoji-keyboard such as
+
+```sh
+./emoji-keyboard --no-sandbox
+```
+
+Do not worry, as emoji-keyboard doesn't load any remote resources, sandbox can be safely disabled.
+
+Relevant bug [here](https://github.com/OzymandiasTheGreat/emoji-keyboard/issues/55).
 
 ## Credits and License
 
