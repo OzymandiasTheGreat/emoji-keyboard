@@ -4,9 +4,9 @@ Virtual keyboard-like emoji palette for Linux.
 
 -------------------
 
-If you find this software useful, [consider becoming a patron](https://www.patreon.com/ozymandias)
+If you find this software useful,
 
-If you wish to make one-time donation, become a patron (you'll be charged) and immediately cancel your subscription.
+please [![Donate](https://d1iczxrky3cnb2.cloudfront.net/button-medium-blue.png)](https://donorbox.org/open-source-support)
 
 -------------------
 
