@@ -1,10 +1,10 @@
 [[package]]
 category = "dev"
-description = "A simple wrapper around optparse for powerful command line utilities."
+description = "Composable command line interface toolkit"
 name = "click"
 optional = false
-python-versions = "*"
-version = "6.7"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "7.1.2"
 
 [[package]]
 category = "main"
@@ -21,8 +21,16 @@ description = "Read resources from Python packages"
 marker = "python_version < \"3.7\""
 name = "importlib-resources"
 optional = false
-python-versions = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3"
-version = "1.0.2"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+version = "3.2.1"
+
+[package.dependencies]
+[package.dependencies.zipp]
+python = "<3.8"
+version = ">=0.4"
+
+[package.extras]
+docs = ["sphinx", "rst.linker", "jaraco.packaging"]
 
 [[package]]
 category = "main"
@@ -30,7 +38,7 @@ description = "Full toolkit agnostic cross-platform clipboard access"
 name = "klembord"
 optional = false
 python-versions = ">=3.4,<4.0"
-version = "0.2.1"
+version = "0.2.2"
 
 [package.dependencies]
 python-xlib = ">=0.26,<0.27"
@@ -48,14 +56,6 @@ version = "0.1.2"
 evdev = ">=1.3.0,<2.0.0"
 python-libinput = ">=0.1.0,<0.2.0"
 python-xlib = ">=0.26,<0.27"
-
-[[package]]
-category = "dev"
-description = "ISO country, subdivision, language, currency and script definitions and their translations"
-name = "pycountry"
-optional = false
-python-versions = "*"
-version = "19.8.18"
 
 [[package]]
 category = "main"
@@ -84,7 +84,7 @@ description = "A command line utility for building fully self contained Python z
 name = "shiv"
 optional = false
 python-versions = ">=3.6"
-version = "0.1.1"
+version = "0.1.3"
 
 [package.dependencies]
 click = ">=6.7,<7.0 || >7.0"
@@ -102,7 +102,7 @@ marker = "sys_platform == \"linux\""
 name = "six"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "1.14.0"
+version = "1.15.0"
 
 [[package]]
 category = "main"
@@ -124,32 +124,43 @@ version = "0.34.2"
 [package.extras]
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
+[[package]]
+category = "dev"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+marker = "python_version < \"3.7\""
+name = "zipp"
+optional = false
+python-versions = ">=3.6"
+version = "3.4.0"
+
+[package.extras]
+docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
+
 [metadata]
-content-hash = "b71cf09619d7e5e23fc281e74c6d9b5a15a347fca9a458d6f8919d2adcc3f5ce"
+content-hash = "8cb70c4e4c321ef510fc66528a85f9994fc86deab064250aa80dbd78b7eb590a"
+lock-version = "1.0"
 python-versions = "^3.6"
 
 [metadata.files]
 click = [
-    {file = "click-6.7-py2.py3-none-any.whl", hash = "sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d"},
-    {file = "click-6.7.tar.gz", hash = "sha256:f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b"},
+    {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
+    {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
 ]
 evdev = [
     {file = "evdev-1.3.0.tar.gz", hash = "sha256:b1c649b4fed7252711011da235782b2c260b32e004058d62473471e5cd30634d"},
 ]
 importlib-resources = [
-    {file = "importlib_resources-1.0.2-py2.py3-none-any.whl", hash = "sha256:6e2783b2538bd5a14678284a3962b0660c715e5a0f10243fd5e00a4b5974f50b"},
-    {file = "importlib_resources-1.0.2.tar.gz", hash = "sha256:d3279fd0f6f847cced9f7acc19bd3e5df54d34f93a2e7bb5f238f81545787078"},
+    {file = "importlib_resources-3.2.1-py2.py3-none-any.whl", hash = "sha256:e2860cf0c4bc999947228d18be154fa3779c5dde0b882bd2d7b3f4d25e698bd6"},
+    {file = "importlib_resources-3.2.1.tar.gz", hash = "sha256:a9fe213ab6452708ec1b3f4ec6f2881b8ab3645cb4e5efb7fea2bbf05a91db3b"},
 ]
 klembord = [
-    {file = "klembord-0.2.1-py3-none-any.whl", hash = "sha256:810eff42fae25a6f7a384df427268548099f7b263bac39af66117046d3c9f4d4"},
-    {file = "klembord-0.2.1.tar.gz", hash = "sha256:0785881aefa9c8ebcae548fbfea5be97ca554cf5f2876493e427a82ea9601de0"},
+    {file = "klembord-0.2.2-py3-none-any.whl", hash = "sha256:ae087daf661d64615768d5608aa99d71ce16f7cf1089c6ec8ad1e8cc66e4437b"},
+    {file = "klembord-0.2.2.tar.gz", hash = "sha256:a64e47640988dfdd1114be29dce3fc88807863c160be32498b5cae65f5626119"},
 ]
 macpy = [
     {file = "macpy-0.1.2-py3-none-any.whl", hash = "sha256:6e39dd2c2cfb98bd98db5f408b906c1e4c2cc9bd876b1c806d9bab4d3097fad9"},
     {file = "macpy-0.1.2.tar.gz", hash = "sha256:02bc984a1a93e137cdea9cf9b2cbbb20d86909b364c58398a61d15d55f3739fb"},
-]
-pycountry = [
-    {file = "pycountry-19.8.18.tar.gz", hash = "sha256:3c57aa40adcf293d59bebaffbe60d8c39976fba78d846a018dc0c2ec9c6cb3cb"},
 ]
 python-libinput = [
     {file = "python-libinput-0.1.0.tar.gz", hash = "sha256:e6b20e7fd889001fe74b01a1ff456e5f53c9ed01b016d6ceb65b6f573f129758"},
@@ -159,12 +170,12 @@ python-xlib = [
     {file = "python_xlib-0.26-py2.py3-none-any.whl", hash = "sha256:244570b93cb82f5ceea3e4c861b4a0fffcea36947efa10fd63b7aa69d30047a8"},
 ]
 shiv = [
-    {file = "shiv-0.1.1-py2.py3-none-any.whl", hash = "sha256:e39944e83a45e72e67e55303e3ba0d615f945820da5d59e166562a84a5c7a258"},
-    {file = "shiv-0.1.1.tar.gz", hash = "sha256:23eb1fc223ed7ca5419c22311d9073af053ef309eb4f89436c84c092133a5723"},
+    {file = "shiv-0.1.3-py2.py3-none-any.whl", hash = "sha256:e8784fb9dc07041de547936863884b777c6ffa4ffdd03d9e363e64776ee5a32c"},
+    {file = "shiv-0.1.3.tar.gz", hash = "sha256:444a9552f18e30e346e4d97eeb9f62aa3a83317c9e982ae0fe88ad49fc152efe"},
 ]
 six = [
-    {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
-    {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+    {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
+    {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
 ]
 stopit = [
     {file = "stopit-1.1.2.tar.gz", hash = "sha256:f7f39c583fd92027bd9d06127b259aee7a5b7945c1f1fa56263811e1e766996d"},
@@ -172,4 +183,8 @@ stopit = [
 wheel = [
     {file = "wheel-0.34.2-py2.py3-none-any.whl", hash = "sha256:df277cb51e61359aba502208d680f90c0493adec6f0e848af94948778aed386e"},
     {file = "wheel-0.34.2.tar.gz", hash = "sha256:8788e9155fe14f54164c1b9eb0a319d98ef02c160725587ad60f14ddc57b6f96"},
+]
+zipp = [
+    {file = "zipp-3.4.0-py3-none-any.whl", hash = "sha256:102c24ef8f171fd729d46599845e95c7ab894a4cf45f5de11a44cc7444fb1108"},
+    {file = "zipp-3.4.0.tar.gz", hash = "sha256:ed5eee1974372595f9e416cc7bbeeb12335201d8081ca8a0743c954d4446e5cb"},
 ]

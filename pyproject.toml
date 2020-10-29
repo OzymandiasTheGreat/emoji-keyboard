@@ -15,7 +15,6 @@ macpy = "^0.1.2"
 klembord = "^0.2.1"
 
 [tool.poetry.dev-dependencies]
-pycountry = "^19.8.18"
 shiv = "^0.1.1"
 wheel = "^0.34.2"
 

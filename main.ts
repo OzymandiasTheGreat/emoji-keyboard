@@ -2,7 +2,7 @@ import * as path from "path";
 import * as url from "url";
 import * as fs from "fs";
 
-import { app, Tray, BrowserWindow, Menu, dialog, ipcMain } from "electron";
+import { app, Tray, BrowserWindow, Menu, MenuItem, dialog, ipcMain } from "electron";
 import { PythonShell } from "python-shell";
 import * as XDG from "xdg-portable";
 
@@ -98,6 +98,7 @@ function createWindow(): BrowserWindow {
 			nodeIntegration: true,
 			preload: path.resolve(app.getAppPath(), "preload.js"),
 			allowRunningInsecureContent: (DEV) ? true : false,
+			enableRemoteModule: true,
 		},
 	});
 
@@ -117,6 +118,15 @@ function createWindow(): BrowserWindow {
 	if (DEV) {
 		MAIN_WINDOW.webContents.openDevTools();
 	}
+
+	const menubar = Menu.getApplicationMenu();
+	menubar.append(new MenuItem({ id: "hide", label: "Close", accelerator: "Esc", click: () => MAIN_WINDOW.hide() }));
+	Menu.setApplicationMenu(menubar);
+
+	MAIN_WINDOW.on("close", (e) => {
+		e.preventDefault();
+		MAIN_WINDOW.hide();
+	});
 
 	MAIN_WINDOW.on("ready-to-show", () => {
 		// MAIN_WINDOW.show();
