@@ -20,10 +20,15 @@ def exit(payload, meta):
 	Server.quit()
 
 
-Server.listen('type', output.send)
-Server.listen('load', service.register_emoji)
-Server.listen('skin_tone', service.set_skin_tone)
-Server.listen('unload', service.unregister_emoji)
-Server.listen('exit', exit)
-service.start()
-Server.start()
+def main():
+	Server.listen('type', output.send)
+	Server.listen('load', service.register_emoji)
+	Server.listen('skin_tone', service.set_skin_tone)
+	Server.listen('unload', service.unregister_emoji)
+	Server.listen('exit', exit)
+	service.start()
+	Server.start()
+
+
+if __name__ == "__main__":
+	main()

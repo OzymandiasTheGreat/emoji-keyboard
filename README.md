@@ -76,3 +76,32 @@ Emoji artwork and metadata provided by:
 Grab AppImage from [releases page](https://github.com/OzymandiasTheGreat/emoji-keyboard/releases) and just run it!
 
 ***Feedback is always WELCOME***
+
+## Building
+
+You'll need Python 3.6, Poetry, Node 12 and latest NPM.
+
+I use [Poetry](https://python-poetry.org/) to manage Python bits, so you'll need it installed to build/run from source.
+
+First setup environment and install dependencies:
+
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+poetry install
+npm install
+```
+
+Then to run from source simply run:
+
+```shell
+npm start
+```
+
+To build AppImage:
+
+```shell
+npm run electron:linux
+```
+
+AppImage will be located under `dist/release`.

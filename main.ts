@@ -70,7 +70,17 @@ function createIndicator(): Tray {
 			MAIN_WINDOW.setAlwaysOnTop(true);
 		} },
 		{ id: "about", label: "About", click() { app.showAboutPanel(); } },
-		{ id: "quit", label: "Quit", role: "quit" },
+		{ id: "quit", label: "Quit", click() {
+			SHELL.end((err, code, signal) => {
+				if (!err) {
+					console.log(`PYTHON EXITED ${code} SIGNAL ${signal}`);
+				} else {
+					console.error(`PYTHON THREW ERRORS ${err} CODE ${code} SIGNAL ${signal}`);
+				}
+			}).terminate();
+			PYTHONLOG.end();
+			app.exit();
+		} },
 	]);
 	INDICATOR = new Tray(getAsset(`icons/icon-${PANEL_THEME}-16.png`));
 	INDICATOR.setContextMenu(menu);

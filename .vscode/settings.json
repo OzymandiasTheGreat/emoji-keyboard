@@ -1,8 +1,10 @@
 {
-	"python.pythonPath": ".venv/bin/python3",
 	"git.ignoreLimitWarning": true,
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"files.watcherExclude": {
+		"**/sources/**": true,
 		"**/src/assets/**": true
-	}
+	},
+	"python.linting.flake8Enabled": true,
+	"python.linting.enabled": true
 }

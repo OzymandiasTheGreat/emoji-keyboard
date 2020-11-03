@@ -1,6 +1,6 @@
 {
   "name": "emoji-keyboard",
-  "version": "3.0.0rc2",
+  "version": "3.1.0",
   "description": "Type emoji easily! Virtual keyboard-like emoji palette for Linux with lots of features.",
   "homepage": "https://github.com/OzymandiasTheGreat/emoji-keyboard",
   "repository": "https://github.com/OzymandiasTheGreat/emoji-keyboard",
@@ -22,12 +22,12 @@
     "build": "npm run electron:serve-tsc && ng build",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
-    "build:py": "shiv -c main.py -o dist/resources/main.pyz .",
+    "build:py": "mkdir -p dist/resources/ && shiv -c main -o dist/resources/main.pyz .",
     "ng:serve": "ng serve",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --dev",
     "electron:local": "npm run build:prod && electron .",
-    "electron:linux": "npm run build:py && npm run build:prod && electron-builder build --linux",
+    "electron:linux": "npm run build:py && npm run build:prod && cp -r src/assets/icons/ dist/resources/icon && electron-builder build --linux",
     "lint": "ng lint"
   },
   "devDependencies": {
