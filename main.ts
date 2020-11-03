@@ -100,7 +100,7 @@ function createWindow(): BrowserWindow {
 		// alwaysOnTop: true,  // ALSO NOT IMPLEMENTED ON LINUX
 		fullscreenable: false,
 		title: PKG.name.split("-").map((w) => w.slice(0, 1).toUpperCase() + w.slice(1)).join(" "),
-		icon: getAsset("icons/icon-48.png"),
+		icon: getAsset("icons/icon-48x48.png"),
 		show: false,
 		frame: false,
 		// backgroundColor: "",  // TODO Theming
