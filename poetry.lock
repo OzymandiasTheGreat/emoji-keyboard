@@ -8,7 +8,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "evdev"
-version = "1.3.0"
+version = "1.4.0"
 description = "Bindings to the Linux input handling subsystem"
 category = "main"
 optional = false
@@ -16,17 +16,18 @@ python-versions = "*"
 
 [[package]]
 name = "importlib-resources"
-version = "3.2.1"
+version = "5.1.0"
 description = "Read resources from Python packages"
 category = "main"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+python-versions = ">=3.6"
 
 [package.dependencies]
 zipp = {version = ">=0.4", markers = "python_version < \"3.8\""}
 
 [package.extras]
-docs = ["sphinx", "rst.linker", "jaraco.packaging"]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "pytest-enabler", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [[package]]
 name = "klembord"
@@ -42,7 +43,7 @@ stopit = {version = ">=1.1.2,<2.0.0", markers = "sys_platform == \"linux\""}
 
 [[package]]
 name = "macpy"
-version = "0.1.2"
+version = "0.1.3"
 description = "Simple, cross-platform macros/GUI automation for python"
 category = "main"
 optional = false
@@ -131,19 +132,19 @@ click = [
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
 ]
 evdev = [
-    {file = "evdev-1.3.0.tar.gz", hash = "sha256:b1c649b4fed7252711011da235782b2c260b32e004058d62473471e5cd30634d"},
+    {file = "evdev-1.4.0.tar.gz", hash = "sha256:8782740eb1a86b187334c07feb5127d3faa0b236e113206dfe3ae8f77fb1aaf1"},
 ]
 importlib-resources = [
-    {file = "importlib_resources-3.2.1-py2.py3-none-any.whl", hash = "sha256:e2860cf0c4bc999947228d18be154fa3779c5dde0b882bd2d7b3f4d25e698bd6"},
-    {file = "importlib_resources-3.2.1.tar.gz", hash = "sha256:a9fe213ab6452708ec1b3f4ec6f2881b8ab3645cb4e5efb7fea2bbf05a91db3b"},
+    {file = "importlib_resources-5.1.0-py3-none-any.whl", hash = "sha256:885b8eae589179f661c909d699a546cf10d83692553e34dca1bf5eb06f7f6217"},
+    {file = "importlib_resources-5.1.0.tar.gz", hash = "sha256:bfdad047bce441405a49cf8eb48ddce5e56c696e185f59147a8b79e75e9e6380"},
 ]
 klembord = [
     {file = "klembord-0.2.2-py3-none-any.whl", hash = "sha256:ae087daf661d64615768d5608aa99d71ce16f7cf1089c6ec8ad1e8cc66e4437b"},
     {file = "klembord-0.2.2.tar.gz", hash = "sha256:a64e47640988dfdd1114be29dce3fc88807863c160be32498b5cae65f5626119"},
 ]
 macpy = [
-    {file = "macpy-0.1.2-py3-none-any.whl", hash = "sha256:6e39dd2c2cfb98bd98db5f408b906c1e4c2cc9bd876b1c806d9bab4d3097fad9"},
-    {file = "macpy-0.1.2.tar.gz", hash = "sha256:02bc984a1a93e137cdea9cf9b2cbbb20d86909b364c58398a61d15d55f3739fb"},
+    {file = "macpy-0.1.3-py3-none-any.whl", hash = "sha256:bbc45e3aa1f2d158648d985fbb76fa6d9170341ef636cd310863390edc858b13"},
+    {file = "macpy-0.1.3.tar.gz", hash = "sha256:7950528d4d3204f75a31690b6c21eb5ee60e97957c26b83a4b3898d428592826"},
 ]
 pycountry = [
     {file = "pycountry-20.7.3.tar.gz", hash = "sha256:81084a53d3454344c0292deebc20fcd0a1488c136d4900312cbd465cf552cb42"},
