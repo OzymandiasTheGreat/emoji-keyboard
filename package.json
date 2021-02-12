@@ -65,7 +65,7 @@
     "spectron": "12.0.0",
     "ts-node": "9.0.0",
     "typescript": "4.0.5",
-    "wait-on": "5.2.0",
+    "wait-on": "5.2.1",
     "webdriver-manager": "12.1.7",
     "zone.js": "0.10.3"
   },
@@ -73,9 +73,9 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@angular/animations": "^10.2.0",
+    "@angular/animations": "10.2.4",
     "@angular/cdk": "10.2.5",
-    "@angular/forms": "^10.2.0",
+    "@angular/forms": "10.2.4",
     "@angular/material": "10.2.5",
     "@mdi/font": "4.9.95",
     "custom-electron-titlebar": "3.2.5",
@@ -84,7 +84,7 @@
     "object-observer": "2.5.2",
     "python-shell": "1.0.8",
     "spinkit": "2.0.1",
-    "tslib": "^2.0.0",
+    "tslib": "2.1.0",
     "xdg-portable": "7.2.1"
   }
 }
