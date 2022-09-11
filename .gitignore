@@ -1,54 +1,14 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
 
-# compiled output
-/dist
-/tmp
-/out-tsc
-/app-builds
-/release
-__pycache__/
-main.js
-src/**/*.js
-!src/karma.conf.js
-*.js.map
-*.pyc
-
-# dependencies
-/node_modules
-/.venv
-/*.egg-info
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
-package-lock.json
-
-# e2e
-/e2e/*.js
-!/e2e/protractor.conf.js
-/e2e/*.map
-
-# System Files
+# macOS
 .DS_Store
-Thumbs.db

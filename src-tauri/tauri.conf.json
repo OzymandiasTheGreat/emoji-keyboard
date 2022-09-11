@@ -1,0 +1,84 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "yarn build",
+    "beforeDevCommand": "yarn start",
+    "devPath": "http://localhost:19006",
+    "distDir": "../web-build"
+  },
+  "package": {
+    "productName": "emoji-keyboard",
+    "version": "4.0.0"
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "category": "Utility",
+      "copyright": "2022 Tomas Ravinskas",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "me.tomasrav.emoji_keyboard",
+      "longDescription": "Virtual keyboard like emoji palette",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "Emoji keyboard",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 320,
+        "resizable": false,
+        "title": "Emoji Keyboard",
+        "width": 400
+      }
+    ],
+    "allowlist": {
+      "all": false,
+      "clipboard": {
+        "all": true
+      },
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "window": {
+        "all": false,
+        "hide": true,
+        "setFocus": true,
+        "setPosition": true,
+        "setSkipTaskbar": true,
+        "show": true
+      }
+    },
+    "systemTray": {
+      "iconPath": "icons/icon.png"
+    }
+  }
+}
