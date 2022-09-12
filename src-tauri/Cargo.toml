@@ -28,10 +28,6 @@ interprocess = "1.1.1"
 git = "https://github.com/tauri-apps/tauri-plugin-store"
 branch = "dev"
 
-[patch.crates-io]
-tauri = { git = "https://github.com/tauri-apps/tauri", branch = "dev"}
-tao = { git = "https://github.com/tauri-apps/tao", branch = "dev" }
-
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL

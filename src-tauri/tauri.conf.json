@@ -26,7 +26,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "me.tomasrav.emoji_keyboard",
+      "identifier": "me.tomasrav.emojikeyboard",
       "longDescription": "Virtual keyboard like emoji palette",
       "macOS": {
         "entitlements": null,

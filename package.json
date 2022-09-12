@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "start": "expo start --web",
-    "build": "expo build:web",
+    "build": "expo export:web",
     "icons": "node node_modules/.bin/tauricon"
   },
   "devDependencies": {
