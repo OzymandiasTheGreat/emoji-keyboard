@@ -1,10 +1,10 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "yarn build",
-    "beforeDevCommand": "yarn start",
-    "devPath": "http://localhost:19006",
-    "distDir": "../web-build"
+		"beforeBuildCommand": "yarn build",
+		"beforeDevCommand": "",
+		"devPath": "http://localhost:19006",
+		"distDir": "../web-build"
   },
   "package": {
     "productName": "emoji-keyboard",

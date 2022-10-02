@@ -2,7 +2,6 @@
   "name": "emoji-keyboard",
   "version": "4.0.0",
   "description": "Type emoji easily! Virtual keyboard-like emoji palette for Linux with lots of features.",
-  "homepage": "https://github.com/OzymandiasTheGreat/emoji-keyboard",
   "repository": "https://github.com/OzymandiasTheGreat/emoji-keyboard",
   "author": {
     "name": "Tomas Ravinskas",
